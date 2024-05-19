@@ -1,6 +1,14 @@
+import 'package:android_configure_ed/firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  FirebaseFirestore.instance.collection("user").doc("teste").set({"teste": "teste"});
   runApp(const MyApp());
 }
 
