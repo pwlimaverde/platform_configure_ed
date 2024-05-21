@@ -12,9 +12,6 @@ void main() async{
     checkConnectInit: false,
     dartPluginInit: false,
   );
-  await FeaturesServicePresenter.to.externalStorage.write(
-    Registro(colecao: "user", documento: "teste", dados: {"teste": "testeplat"}),
-  );
   runApp(const MyApp());
 }
 
