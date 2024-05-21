@@ -1,15 +1,18 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:services/services.dart';
 
-import 'firebase_options.dart';
+import 'src/utils/firebase_options.dart';
 
 void main() async {
-  await startServices(options: DefaultFirebaseOptions.currentPlatform);
-  FirebaseFirestore.instance
-      .collection("user")
-      .doc("teste3")
-      .set({"teste": "teste"});
+  await startServices(
+    options: DefaultFirebaseOptions.currentPlatform,
+    permissionInit: true,
+    checkConnectInit: true,
+    dartPluginInit: true,
+  );
+  await FeaturesServicePresenter.to.externalStorage.write(
+    Registro(colecao: "user", documento: "teste", dados: {"teste": "testeand"}),
+  );
   runApp(const MyApp());
 }
 

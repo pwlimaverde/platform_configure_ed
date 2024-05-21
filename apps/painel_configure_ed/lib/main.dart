@@ -1,6 +1,20 @@
-import 'package:flutter/material.dart';
 
-void main() {
+import 'package:flutter/material.dart';
+import 'package:services/services.dart';
+
+import 'src/utils/firebase_options.dart';
+
+
+void main() async{
+  await startServices(
+    options: DefaultFirebaseOptions.currentPlatform,
+    permissionInit: false,
+    checkConnectInit: false,
+    dartPluginInit: false,
+  );
+  await FeaturesServicePresenter.to.externalStorage.write(
+    Registro(colecao: "user", documento: "teste", dados: {"teste": "testeplat"}),
+  );
   runApp(const MyApp());
 }
 

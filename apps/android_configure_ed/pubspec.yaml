@@ -1,5 +1,5 @@
 name: android_configure_ed
-description: "Progeto para otimizar as configuracoes android."
+description: "Projeto para otimizar as configuracoes android."
 publish_to: 'none' 
 version: 0.1.0
 environment:
