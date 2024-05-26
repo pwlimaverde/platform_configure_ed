@@ -1,11 +1,6 @@
 import 'dart:ui';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:device_info_plus/device_info_plus.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:logger/logger.dart';
-import 'package:uuid/uuid.dart';
+
+import 'package:dependencies/dependencies.dart';
 
 import '../../features/signIn/domain/models/comandos_gerais.dart';
 import '../../features/signIn/domain/models/comandos_mic.dart';
@@ -95,7 +90,7 @@ class LoginController extends GetxController {
               .set(
                 comandosMic.toMap(),
               );
-              newUser
+          newUser
               .collection("dispositivos")
               .doc(dispositivo.id)
               .collection("comandos")

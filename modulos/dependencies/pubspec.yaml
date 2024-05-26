@@ -22,13 +22,12 @@ dependencies:
   firebase_storage: ^11.7.3
   cloud_firestore: ^4.17.1
   firebase_remote_config: ^4.3.14
-
-
   firebase_auth: ^4.19.3
   google_sign_in: ^6.2.1
-
   device_info_plus: ^10.1.0
   uuid: ^4.4.0
+  font_awesome_flutter: ^10.7.0
+  logger: ^2.2.0
 
   #modulos
   services:

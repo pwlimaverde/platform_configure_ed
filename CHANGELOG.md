@@ -1,3 +1,4 @@
 ## 0.1.0
 
-1 - configuração services
+1 - Configuração services
+2 - Implantação modulo dependencies
