@@ -1,4 +1,4 @@
-import 'package:dependencies_module/dependencies_module.dart';
+import 'package:dependencies/dependencies.dart';
 import '../model/permission_model.dart';
 
 ///Usecase with external Datasource call

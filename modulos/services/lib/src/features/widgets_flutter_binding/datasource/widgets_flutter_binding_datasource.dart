@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dependencies_module/dependencies_module.dart';
+import 'package:dependencies/dependencies.dart';
 
 ///Datasources
 final class WidgetsFlutterBindingDatasource

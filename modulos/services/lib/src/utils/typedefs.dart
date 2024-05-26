@@ -1,4 +1,4 @@
-import 'package:dependencies_module/dependencies_module.dart';
+import 'package:dependencies/dependencies.dart';
 import 'package:flutter/material.dart';
 
 import '../features/check_connect/domain/model/check_connect_model.dart';

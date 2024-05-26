@@ -1,4 +1,4 @@
-import 'package:dependencies_module/dependencies_module.dart';
+import 'package:dependencies/dependencies.dart';
 import 'dart:async';
 import '../domain/interface/local_storage.dart';
 

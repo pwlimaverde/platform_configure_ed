@@ -1,4 +1,4 @@
-import 'package:dependencies_module/dependencies_module.dart';
+import 'package:dependencies/dependencies.dart';
 
 
 import 'features/check_connect/datasource/connectivity_datasource.dart';

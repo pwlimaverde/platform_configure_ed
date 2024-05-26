@@ -9,8 +9,8 @@ dependencies:
     sdk: flutter
 
   #Dependencias internas
-  dependencies_module:
-    path: ../../modulos/dependencies_module
+  dependencies:
+    path: ../../modulos/dependencies
 
 dev_dependencies:
   flutter_test:

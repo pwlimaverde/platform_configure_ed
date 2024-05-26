@@ -1,5 +1,5 @@
+import 'package:dependencies/dependencies.dart';
 import 'package:flutter/material.dart';
-import 'package:services/services.dart';
 
 import 'src/utils/firebase_options.dart';
 

@@ -1,4 +1,4 @@
-library dependencies_module;
+library dependencies;
 
 ///Pacakages Externos
 export 'package:return_success_or_error/return_success_or_error.dart';

@@ -1,4 +1,4 @@
-import 'package:dependencies_module/dependencies_module.dart';
+import 'package:dependencies/dependencies.dart';
 
 import '../../../../utils/typedefs.dart';
 import '../model/check_connect_model.dart';

@@ -1,4 +1,4 @@
-import 'package:dependencies_module/dependencies_module.dart';
+import 'package:dependencies/dependencies.dart';
 
 import '../../domain/interface/external_storage.dart';
 import '../../domain/models/registro.dart';

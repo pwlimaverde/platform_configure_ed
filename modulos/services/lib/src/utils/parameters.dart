@@ -1,4 +1,4 @@
-import 'package:dependencies_module/dependencies_module.dart';
+import 'package:dependencies/dependencies.dart';
 final class ParametrosFirebaseStorage implements ParametersReturnResult {
   final FirebaseFirestore instanceFirebase;
   @override

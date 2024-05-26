@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:dependencies_module/dependencies_module.dart';
+import 'package:dependencies/dependencies.dart';
 import '../../../../utils/parameters.dart';
 import '../../domain/interface/external_storage.dart';
 import 'firebase_external_storage.dart';

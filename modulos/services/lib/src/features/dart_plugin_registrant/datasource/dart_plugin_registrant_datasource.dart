@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'package:dependencies_module/dependencies_module.dart';
+import 'package:dependencies/dependencies.dart';
 
 import '../domain/model/dart_plugin_registrant_model.dart';
 

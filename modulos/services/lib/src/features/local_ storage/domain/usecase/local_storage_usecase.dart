@@ -1,4 +1,4 @@
-import 'package:dependencies_module/dependencies_module.dart';
+import 'package:dependencies/dependencies.dart';
 import '../interface/local_storage.dart';
 
 final class LocalStorageUsecase extends UsecaseBaseCallData<

@@ -1,6 +1,4 @@
-import 'package:dependencies_module/dependencies_module.dart';
-
-import 'features/features_service_presenter.dart';
+import 'package:dependencies/dependencies.dart';
 import 'service_bindings.dart';
 
 Future<void> startServices({

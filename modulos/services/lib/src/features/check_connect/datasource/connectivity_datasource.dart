@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:dependencies_module/dependencies_module.dart';
+import 'package:dependencies/dependencies.dart';
 
 import '../../../utils/typedefs.dart';
 
