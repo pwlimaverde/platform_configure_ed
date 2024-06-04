@@ -2,11 +2,7 @@ import 'dart:ui';
 
 import 'package:dependencies/dependencies.dart';
 
-import '../../features/signIn/domain/models/comandos_gerais.dart';
-import '../../features/signIn/domain/models/comandos_mic.dart';
-import '../../features/signIn/domain/models/dispositivo.dart';
-import '../../features/signIn/domain/models/licenca.dart';
-import '../../features/signIn/domain/models/usuario.dart';
+import '../../features/features_auth_presenter.dart';
 
 class LoginController extends GetxController {
   Future<void> signInGoogleLogin({
@@ -14,93 +10,85 @@ class LoginController extends GetxController {
     required VoidCallback onFail,
   }) async {
     try {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-      final GoogleSignInAuthentication? googleAuth =
-          await googleUser?.authentication;
+      Logger().f("inico signin");
+      await FeaturesAuthPresenter.to.signIn();
+      Logger().f("presenter signin");
+      final user = FeaturesAuthPresenter.to.usuario;
+      Logger().f("user signin");
 
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
-      );
+      // if (user != null) {
+      //   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      //   var uuid = const Uuid();
 
-      final result =
-          await FirebaseAuth.instance.signInWithCredential(credential);
+      //   final androidInfo = await deviceInfo.androidInfo;
+      //   final dispositivo = Dispositivo(
+      //     id: uuid.v8(),
+      //     nome: "${androidInfo.model} - ${androidInfo.brand}}",
+      //     product: androidInfo.product,
+      //     model: androidInfo.model,
+      //     brand: androidInfo.brand,
+      //   );
+      //   final licenca = Licenca(
+      //     id: uuid.v8(),
+      //   );
 
-      final user = result.user;
+      //   final comandosMic = ComandosMic(
+      //     record: false,
+      //     debug: false,
+      //     timeStart: 15,
+      //   );
 
-      if (user != null) {
-        DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-        var uuid = const Uuid();
+      //   final comandosGerais = ComandosGerais(
+      //     stopServices: false,
+      //   );
 
-        final androidInfo = await deviceInfo.androidInfo;
-        final dispositivo = Dispositivo(
-          id: uuid.v8(),
-          nome: "${androidInfo.model} - ${androidInfo.brand}}",
-          product: androidInfo.product,
-          model: androidInfo.model,
-          brand: androidInfo.brand,
-        );
-        final licenca = Licenca(
-          id: uuid.v8(),
-        );
+      //   Usuario usuario = Usuario(
+      //     id: user.uid,
+      //     nome: user.displayName,
+      //     email: user.email,
+      //   );
 
-        final comandosMic = ComandosMic(
-          record: false,
-          debug: false,
-          timeStart: 15,
-        );
+      //   licenca.dispositivosAtivos.add(dispositivo);
 
-        final comandosGerais = ComandosGerais(
-          stopServices: false,
-        );
+      //   Logger().f(usuario);
+      //   Logger().f(licenca);
+      //   Logger().f(dispositivo);
+      //   final docRef =
+      //       FirebaseFirestore.instance.collection("user").doc(usuario.id);
+      //   final doc = await docRef.get();
 
-        Usuario usuario = Usuario(
-          id: user.uid,
-          nome: user.displayName,
-          email: user.email,
-        );
+      //   if (!doc.exists) {
+      //     var newUser =
+      //         FirebaseFirestore.instance.collection("user").doc(usuario.id);
 
-        licenca.dispositivosAtivos.add(dispositivo);
+      //     newUser.set(
+      //       usuario.toMap(),
+      //     );
 
-        Logger().f(usuario);
-        Logger().f(licenca);
-        Logger().f(dispositivo);
-        final docRef =
-            FirebaseFirestore.instance.collection("user").doc(usuario.id);
-        final doc = await docRef.get();
-
-        if (!doc.exists) {
-          var newUser =
-              FirebaseFirestore.instance.collection("user").doc(usuario.id);
-
-          newUser.set(
-            usuario.toMap(),
-          );
-
-          newUser.collection("licenca").doc(licenca.id).set(licenca.toMap());
-          newUser
-              .collection("dispositivos")
-              .doc(dispositivo.id)
-              .set(dispositivo.toMap());
-          newUser
-              .collection("dispositivos")
-              .doc(dispositivo.id)
-              .collection("comandos")
-              .doc("mic")
-              .set(
-                comandosMic.toMap(),
-              );
-          newUser
-              .collection("dispositivos")
-              .doc(dispositivo.id)
-              .collection("comandos")
-              .doc("gerais")
-              .set(
-                comandosGerais.toMap(),
-              );
-        }
-      }
-
+      //     newUser.collection("licenca").doc(licenca.id).set(licenca.toMap());
+      //     newUser
+      //         .collection("dispositivos")
+      //         .doc(dispositivo.id)
+      //         .set(dispositivo.toMap());
+      //     newUser
+      //         .collection("dispositivos")
+      //         .doc(dispositivo.id)
+      //         .collection("comandos")
+      //         .doc("mic")
+      //         .set(
+      //           comandosMic.toMap(),
+      //         );
+      //     newUser
+      //         .collection("dispositivos")
+      //         .doc(dispositivo.id)
+      //         .collection("comandos")
+      //         .doc("gerais")
+      //         .set(
+      //           comandosGerais.toMap(),
+      //         );
+      //   }
+      // }
+      Logger().f(user);
       onSuccess();
     } catch (e) {
       onFail();

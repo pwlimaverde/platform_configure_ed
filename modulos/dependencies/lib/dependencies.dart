@@ -21,4 +21,5 @@ export 'package:logger/logger.dart';
 
 ///Pacakages Internos
 export 'package:services/services.dart';
+export 'package:auth/auth.dart';
 export 'package:core/core.dart';

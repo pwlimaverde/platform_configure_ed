@@ -32,6 +32,8 @@ dependencies:
   #modulos
   services:
     path: ../services
+  auth:
+    path: ../auth
   core:
     path: ../core
   

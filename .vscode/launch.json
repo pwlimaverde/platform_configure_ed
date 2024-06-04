@@ -8,7 +8,7 @@
             "name": "android_configure_ed",
             "cwd": "apps\\android_configure_ed",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
         },
         {
             "name": "android_configure_ed (profile mode)",
@@ -28,7 +28,10 @@
             "name": "painel_configure_ed",
             "cwd": "apps\\painel_configure_ed",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "args":[
+                "--web-port=7357"
+            ]
         },
         {
             "name": "painel_configure_ed (profile mode)",
