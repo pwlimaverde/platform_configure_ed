@@ -1,17 +1,15 @@
 import 'package:dependencies/dependencies.dart';
-import 'package:get/get.dart';
-
+import 'auth_controller.dart';
 import 'features/features_auth_presenter.dart';
 import 'features/sign_in/datasources/sign_in_with_google_datasource.dart';
 import 'features/sign_in/domain/usecase/sign_in_usecase.dart';
-import 'ui/login/login_controller.dart';
 import 'utils/typedefs.dart';
 
 class AuthBinding implements Bindings {
   @override
   void dependencies() {
-    Get.put<LoginController>(
-      LoginController(),
+    Get.put<AuthController>(
+      AuthController(),
       permanent: true,
     );
     Get.put<ExternalStorage>(

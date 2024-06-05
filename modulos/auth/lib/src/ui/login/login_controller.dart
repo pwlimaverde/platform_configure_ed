@@ -99,4 +99,6 @@ class LoginController extends GetxController {
     await FirebaseAuth.instance.signOut();
     await GoogleSignIn().signOut();
   }
+
+  
 }

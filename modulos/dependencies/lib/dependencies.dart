@@ -14,6 +14,7 @@ export 'package:cloud_firestore/cloud_firestore.dart';
 export 'package:firebase_remote_config/firebase_remote_config.dart';
 export 'package:firebase_auth/firebase_auth.dart';
 export 'package:google_sign_in/google_sign_in.dart';
+export 'package:google_sign_in_web/web_only.dart';
 export 'package:device_info_plus/device_info_plus.dart';
 export 'package:uuid/uuid.dart';
 export 'package:font_awesome_flutter/font_awesome_flutter.dart';
