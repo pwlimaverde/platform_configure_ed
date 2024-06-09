@@ -1,48 +1,42 @@
 import 'package:dependencies/dependencies.dart';
 
-import '../domain/models/usuario.dart';
-
-final class SignInWithGoogleDatasource
-    implements Datasource<Usuario> {
+final class SignInWithGoogleDatasource implements Datasource<Usuario> {
   final ExternalStorage externalStorage;
+  final GoogleSignIn signIn;
 
-  SignInWithGoogleDatasource({required this.externalStorage});
+  SignInWithGoogleDatasource({
+    required this.externalStorage,
+    required this.signIn,
+  });
   @override
   Future<Usuario> call(NoParams parameters) async {
     try {
-      Logger().e("credenciando");
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-  
-      final GoogleSignInAuthentication? googleAuth =
-          await googleUser?.authentication;
-      Logger().e("credenciado");
+      final account = await signIn.signIn();
 
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
-      );
-      final result =
-          await FirebaseAuth.instance.signInWithCredential(credential);
-      Logger().e(result);
-      final user = result.user;
-      Logger().e(user);
-
-      if (user != null) {
+      if (account != null) {
         final registro = Registro(
           colecao: "user",
-          documento: user.uid,
+          documento: account.id,
         );
         final reference = await externalStorage.read<Map<String, dynamic>>(
           registro,
           false,
         );
-        Logger().e(reference);
-
-        return Usuario.fromMap(reference);
+        if (reference.isNotEmpty) {
+          return Usuario.fromMap(reference);
+        } else {
+          signIn.disconnect();
+          signIn.signOut();
+          throw Exception("Usuario não cadastrado!");
+        }
       } else {
+        signIn.disconnect();
+        signIn.signOut();
         throw Exception("Usuario não cadastrado!");
       }
     } catch (e) {
+      signIn.disconnect();
+      signIn.signOut();
       throw Exception("Erro ao carregar configurações do banco de dados");
     }
   }

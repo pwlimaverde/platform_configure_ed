@@ -1,7 +1,4 @@
 import 'package:dependencies/dependencies.dart';
-
-import '../models/usuario.dart';
-
 final class SignInUsecase extends UsecaseBaseCallData<Usuario, Usuario> {
   SignInUsecase(super.datasource);
 

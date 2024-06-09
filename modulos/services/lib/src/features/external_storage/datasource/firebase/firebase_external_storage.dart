@@ -1,7 +1,5 @@
 import 'package:dependencies/dependencies.dart';
 
-import '../../domain/interface/external_storage.dart';
-import '../../domain/models/registro.dart';
 
 class FirebaseExternalStorage implements ExternalStorage {
   final FirebaseFirestore instanceFirebase;
