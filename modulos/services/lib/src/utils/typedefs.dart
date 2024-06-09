@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 
 import '../features/check_connect/domain/model/check_connect_model.dart';
 import '../features/dart_plugin_registrant/domain/model/dart_plugin_registrant_model.dart';
-import '../features/external_storage/domain/interface/external_storage.dart';
 import '../features/firebase_init/domain/model/dart_plugin_registrant_model.dart';
 import '../features/local_storage/domain/interface/local_storage.dart';
 import '../features/permission/domain/model/permission_model.dart';
+
+typedef SignInService = UsecaseBase<GoogleSignIn>;
 
 typedef EsService = UsecaseBaseCallData<ExternalStorage, ExternalStorage>;
 typedef EsServiceData = Datasource<ExternalStorage>;

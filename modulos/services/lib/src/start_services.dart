@@ -14,6 +14,7 @@ Future<void> startServices({
     FeaturesServicePresenter.to.widgetsFlutterBindingService(),
     FeaturesServicePresenter.to.firebaseInitService(options: options),
     FeaturesServicePresenter.to.localStorageService(),
+    FeaturesServicePresenter.to.googleSignInService(),
   ];
 
   if (dartPluginInit) {

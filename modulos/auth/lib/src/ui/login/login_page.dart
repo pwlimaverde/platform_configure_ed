@@ -11,7 +11,7 @@ class LoginPage extends GetView<AuthController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Obx(()=>_buildBody(controller)),
+      body: Obx(() => _buildBody(controller)),
       // Column(
       //   children: [
       //     Center(
@@ -78,15 +78,6 @@ Widget _buildBody(AuthController controller) {
         if (controller.isAuthorized.value) ...<Widget>[
           // The user has Authorized all required scopes
           Text(controller.contactText.value)
-        ],
-        if (!controller.isAuthorized.value) ...<Widget>[
-          // The user has NOT Authorized all required scopes.
-          // (Mobile users may never see this button!)
-          const Text('Additional permissions needed to read your contacts.'),
-          ElevatedButton(
-            onPressed: controller.handleAuthorizeScopes,
-            child: const Text('REQUEST PERMISSIONS'),
-          ),
         ],
         ElevatedButton(
           onPressed: controller.handleSignOut,

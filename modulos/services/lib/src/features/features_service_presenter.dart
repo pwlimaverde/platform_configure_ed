@@ -11,6 +11,7 @@ final class FeaturesServicePresenter {
   late Stream<CheckConnectModel> checkConnect;
   late LocalStorage localStorage;
   late ExternalStorage externalStorage;
+  late GoogleSignIn signIn;
 
   final PermissionService _permissionService;
   final FbService _fbService;
@@ -19,6 +20,7 @@ final class FeaturesServicePresenter {
   final DtprService _dtprService;
   final WidService _widService;
   final ConnectService _connectService;
+  final SignInService _signInService;
 
   FeaturesServicePresenter._({
     required FbService fbService,
@@ -28,7 +30,9 @@ final class FeaturesServicePresenter {
     required DtprService dtprService,
     required WidService widService,
     required ConnectService connectService,
+    required SignInService signInService,
   })  : _connectService = connectService,
+        _signInService = signInService,
         _widService = widService,
         _dtprService = dtprService,
         _permissionService = permissionService,
@@ -44,6 +48,7 @@ final class FeaturesServicePresenter {
     required DtprService dtprService,
     required WidService widService,
     required ConnectService connectService,
+    required SignInService signInService,
   }) {
     _instance ??= FeaturesServicePresenter._(
       esService: esService,
@@ -53,6 +58,7 @@ final class FeaturesServicePresenter {
       dtprService: dtprService,
       widService: widService,
       connectService: connectService,
+      signInService: signInService,
     );
     return _instance!;
   }
@@ -137,6 +143,17 @@ final class FeaturesServicePresenter {
         checkConnect = data.result;
         return unit;
       case ErrorReturn<Stream<CheckConnectModel>>():
+        throw data.result.message;
+    }
+  }
+
+  Future<Unit> googleSignInService() async {
+    final data = await _signInService(NoParams());
+    switch (data) {
+      case SuccessReturn<GoogleSignIn>():
+        signIn = data.result;
+        return unit;
+      case ErrorReturn<GoogleSignIn>():
         throw data.result.message;
     }
   }

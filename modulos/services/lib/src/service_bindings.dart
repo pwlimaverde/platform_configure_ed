@@ -1,6 +1,5 @@
 import 'package:dependencies/dependencies.dart';
 
-
 import 'features/check_connect/datasource/connectivity_datasource.dart';
 import 'features/check_connect/domain/usecase/check_connect_usecase.dart';
 import 'features/dart_plugin_registrant/datasource/dart_plugin_registrant_datasource.dart';
@@ -9,12 +8,14 @@ import 'features/external_storage/datasource/firebase/firebase_storage_datasourc
 import 'features/external_storage/domain/usecase/external_storage_usecase.dart';
 import 'features/firebase_init/datasource/firebase_init_datasource.dart';
 import 'features/firebase_init/domain/usecase/firebase_init_usecase.dart';
+import 'features/google_sign_in/domain/usecase/google_sign_in_usecase.dart';
 import 'features/local_storage/datasource/hive_storage_datasource.dart';
 import 'features/local_storage/domain/usecase/local_storage_usecase.dart';
 import 'features/permission/datasource/permission_datasource.dart';
 import 'features/permission/domain/usecase/permission_usecase.dart';
 import 'features/widgets_flutter_binding/datasource/widgets_flutter_binding_datasource.dart';
 import 'features/widgets_flutter_binding/domain/usecase/widgets_flutter_binding_usecase.dart';
+import 'utils/scopes.dart';
 import 'utils/typedefs.dart';
 
 final class ServiceBindings implements Bindings {
@@ -81,6 +82,16 @@ final class ServiceBindings implements Bindings {
         Get.find(),
       ),
     );
+    Get.lazyPut<GoogleSignIn>(
+      () => GoogleSignIn(
+        scopes: scopes,
+      ),
+    );
+    Get.lazyPut<SignInService>(
+      () => GoogleSignInUsecase(
+        Get.find(),
+      ),
+    );
     Get.put<FeaturesServicePresenter>(
       FeaturesServicePresenter(
         esService: Get.find(),
@@ -90,6 +101,7 @@ final class ServiceBindings implements Bindings {
         dtprService: Get.find(),
         widService: Get.find(),
         connectService: Get.find(),
+        signInService: Get.find(),
       ),
       permanent: true,
     );
