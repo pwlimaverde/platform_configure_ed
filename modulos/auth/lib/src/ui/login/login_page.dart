@@ -77,11 +77,7 @@ Widget _buildBody(AuthController controller) {
         const Text('Signed in successfully.'),
         if (controller.isAuthorized.value) ...<Widget>[
           // The user has Authorized all required scopes
-          Text(controller.contactText.value),
-          ElevatedButton(
-            child: const Text('REFRESH'),
-            onPressed: () => controller.handleGetContact(user),
-          ),
+          Text(controller.contactText.value)
         ],
         if (!controller.isAuthorized.value) ...<Widget>[
           // The user has NOT Authorized all required scopes.
