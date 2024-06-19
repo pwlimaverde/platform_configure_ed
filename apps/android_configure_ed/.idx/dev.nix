@@ -17,6 +17,7 @@
       "Dart-Code.flutter"
       "Dart-Code.dart-code"
     ];
+    
     # Enable previews and customize configuration
     previews = {
       enable = true;
