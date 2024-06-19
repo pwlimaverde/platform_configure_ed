@@ -1,14 +1,6 @@
-import 'package:dependencies/dependencies.dart';
 import 'package:flutter/material.dart';
 
-import 'src/utils/firebase_options.dart';
 void main() async {
-  await startServices(
-    options: DefaultFirebaseOptions.currentPlatform,
-    permissionInit: true,
-    checkConnectInit: true,
-    dartPluginInit: true,
-  );
   runApp(const MyApp());
 }
 
