@@ -24,7 +24,6 @@ dependencies:
   firebase_remote_config: ^4.3.14
   firebase_auth: ^4.19.3
   google_sign_in: ^6.2.1
-  google_sign_in_web: ^0.12.4
   device_info_plus: ^10.1.0
   uuid: ^4.4.0
   font_awesome_flutter: ^10.7.0
