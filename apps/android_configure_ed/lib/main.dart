@@ -11,14 +11,14 @@ void main() async {
     checkConnectInit: true,
     dartPluginInit: true,
   );
-  // final teste = await FeaturesServicePresenter.to.externalStorage.read(
-  //   Registro(colecao: "user", documento: "109574237249954319207"), false
-  // );
+  final teste = await FeaturesServicePresenter.to.externalStorage.read(
+    Registro(colecao: "user", documento: "109574237249954319207"), false
+  );
   // await FeaturesServicePresenter.to.externalStorage.write(
   //   Registro(colecao: "user", documento: "teste2", dados: {"teste": "testeand"}),
   // );
 
-  // Logger().f(teste);
+  Logger().f(teste);
   runApp(const MyApp());
 }
 
