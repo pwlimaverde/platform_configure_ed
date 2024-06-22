@@ -1,6 +1,22 @@
+import 'package:dependencies/dependencies.dart';
 import 'package:flutter/material.dart';
 
+import 'src/utils/firebase_options.dart';
+
 void main() async {
+  await startServices(
+    options: DefaultFirebaseOptions.currentPlatform,
+    permissionInit: true,
+    checkConnectInit: true,
+    dartPluginInit: true,
+  );
+  // await FeaturesServicePresenter.to.externalStorage.write(
+  //   Registro(colecao: "user", documento: "teste2", dados: {"teste": "testeand"}),
+  // );
+  final teste = await FeaturesServicePresenter.to.externalStorage.read(
+    Registro(colecao: "user", documento: "109574237249954319207"), false
+  );
+  Logger().f(teste);
   runApp(const MyApp());
 }
 
