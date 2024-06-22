@@ -12,7 +12,7 @@ class AppWidgetAnimation extends StatelessWidget {
         primarySwatch: Colors.red,
       ),
       home: Container(
-        color: Colors.grey,
+        color: Colors.amber,
         child: const Center(
           child: CircularProgressIndicator(),
         ),

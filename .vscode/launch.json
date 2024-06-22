@@ -1,32 +1,32 @@
 {
-    // Use o IntelliSense para saber mais sobre os atributos possíveis.
-    // Focalizar para exibir as descrições dos atributos existentes.
-    // Para obter mais informações, acesse: https://go.microsoft.com/fwlink/?linkid=830387
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
             "name": "android_configure_ed",
-            "cwd": "apps\\android_configure_ed",
+            "cwd": "apps/android_configure_ed",
             "request": "launch",
-            "type": "dart",
+            "type": "dart"
         },
         {
             "name": "android_configure_ed (profile mode)",
-            "cwd": "apps\\android_configure_ed",
+            "cwd": "apps/android_configure_ed",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
             "name": "android_configure_ed (release mode)",
-            "cwd": "apps\\android_configure_ed",
+            "cwd": "apps/android_configure_ed",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
         },
         {
             "name": "painel_configure_ed",
-            "cwd": "apps\\painel_configure_ed",
+            "cwd": "apps/painel_configure_ed",
             "request": "launch",
             "type": "dart",
             "args":[
@@ -35,54 +35,66 @@
         },
         {
             "name": "painel_configure_ed (profile mode)",
-            "cwd": "apps\\painel_configure_ed",
+            "cwd": "apps/painel_configure_ed",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
             "name": "painel_configure_ed (release mode)",
-            "cwd": "apps\\painel_configure_ed",
+            "cwd": "apps/painel_configure_ed",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
         },
         {
             "name": "auth",
-            "cwd": "pakages\\auth",
+            "cwd": "modulos/auth",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "auth (profile mode)",
-            "cwd": "pakages\\auth",
+            "name": "core",
+            "cwd": "modulos/core",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "dependencies",
+            "cwd": "modulos/dependencies",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "dependencies (profile mode)",
+            "cwd": "modulos/dependencies",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "auth (release mode)",
-            "cwd": "pakages\\auth",
+            "name": "dependencies (release mode)",
+            "cwd": "modulos/dependencies",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
         },
         {
             "name": "services",
-            "cwd": "pakages\\services",
+            "cwd": "modulos/services",
             "request": "launch",
             "type": "dart"
         },
         {
             "name": "services (profile mode)",
-            "cwd": "pakages\\services",
+            "cwd": "modulos/services",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
             "name": "services (release mode)",
-            "cwd": "pakages\\services",
+            "cwd": "modulos/services",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
