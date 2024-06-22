@@ -5,6 +5,7 @@
   channel = "stable-23.11"; # or "unstable"
   # Use https://search.nixos.org/packages to find packages
   packages = [
+        
     pkgs.nodePackages.firebase-tools
     pkgs.jdk17
     pkgs.unzip
@@ -21,13 +22,10 @@
     previews = {
       enable = false;
       previews = {
-        
-        
         android = {
           command = ["flutter" "run" "--machine" "-d" "android" "-d" "localhost:5555"];
           manager = "flutter";
         };
-
         web = {
           command = ["flutter" "run" "--machine" "-d" "web-server" "--web-hostname" "0.0.0.0" "--web-port" "$PORT"];
           manager = "flutter";
