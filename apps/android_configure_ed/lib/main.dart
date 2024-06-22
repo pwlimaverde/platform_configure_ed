@@ -11,6 +11,8 @@ void main() async {
     checkConnectInit: true,
     dartPluginInit: true,
   );
+
+  
   final teste = await FeaturesServicePresenter.to.externalStorage.read(
     Registro(colecao: "user", documento: "109574237249954319207"), false
   );
