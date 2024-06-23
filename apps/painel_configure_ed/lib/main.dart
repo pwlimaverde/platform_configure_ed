@@ -14,7 +14,6 @@ void main() async {
     checkConnectInit: false,
     dartPluginInit: false,
   );
-
   runApp(
     const AppWidget(),
   );
