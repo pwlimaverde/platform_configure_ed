@@ -1,7 +1,10 @@
+## 0.3.0
+
+1 - Integração IDX
+
 ## 0.2.0
 
-1 - Configuração idx
-2 - Implantação do modulo auth
+1 - Configuração login
 
 ## 0.1.0
 

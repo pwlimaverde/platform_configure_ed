@@ -1,6 +1,24 @@
+
+import 'package:dependencies/dependencies.dart';
 import 'package:flutter/material.dart';
 
+import 'src/utils/firebase_options.dart';
+
 void main() async {
+  await startServices(
+    options: DefaultFirebaseOptions.currentPlatform,
+    permissionInit: true,
+    checkConnectInit: true,
+    dartPluginInit: true,
+  );
+  final teste = await FeaturesServicePresenter.to.externalStorage.read(
+    Registro(colecao: "user", documento: "109574237249954319207"), false
+  );
+  // await FeaturesServicePresenter.to.externalStorage.write(
+  //   Registro(colecao: "user", documento: "teste2", dados: {"teste": "testeand"}),
+  // );
+
+  Logger().f(teste);
   runApp(const MyApp());
 }
 
@@ -11,7 +29,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter Demo IDX',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -31,7 +49,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Flutter Demo Home IDX'),
     );
   }
 }
@@ -106,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'You have pushed the button this many times:',
+              'You have pushed the button this many idx:',
             ),
             Text(
               '$_counter',
