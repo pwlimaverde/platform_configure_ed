@@ -1,10 +1,12 @@
 import 'package:dependencies/dependencies.dart';
 import 'auth_controller.dart';
 import 'features/features_auth_presenter.dart';
+import 'features/get_usuario/datasources/get_usuario_datasource.dart';
+import 'features/get_usuario/domain/usecase/get_usuario_usecase.dart';
 import 'features/nova_conta/datasources/nova_conta_datasource.dart';
 import 'features/nova_conta/domain/usecase/nova_conta_usecase.dart';
-import 'features/sign_in/datasources/sign_in_with_google_datasource.dart';
-import 'features/sign_in/domain/usecase/sign_in_usecase.dart';
+import 'features/sign_in_with_google/datasources/sign_in_with_google_datasource.dart';
+import 'features/sign_in_with_google/domain/usecase/sign_in_with_google_usecase.dart';
 import 'features/sign_out/datasources/sign_out_datasource.dart';
 import 'features/sign_out/domain/usecase/sign_out_usecase.dart';
 import 'utils/typedefs.dart';
@@ -21,14 +23,24 @@ class AuthBinding implements Bindings {
       permanent: true,
     );
 
-    Get.lazyPut<SigninData>(
-      () => SignInWithGoogleDatasource(
+    Get.lazyPut<GetUserData>(
+      () => GetUsuarioDatasource(
         externalStorage: Get.find(),
+      ),
+    );
+    Get.lazyPut<GetUserUsecase>(
+      () => GetUsuarioUsecase(
+        Get.find(),
+      ),
+    );
+
+    Get.lazyPut<SigninGoogleData>(
+      () => SignInWithGoogleDatasource(
         signIn: Get.find(),
       ),
     );
-    Get.lazyPut<SigninUsecase>(
-      () => SignInUsecase(
+    Get.lazyPut<SigninGoogleUsecase>(
+      () => SignInWithGooleUsecase(
         Get.find(),
       ),
     );
@@ -61,7 +73,8 @@ class AuthBinding implements Bindings {
     );
     Get.put<FeaturesAuthPresenter>(
       FeaturesAuthPresenter(
-        signinUsecase: Get.find(),
+        getUsuarioUsecase: Get.find(),
+        signinGoogleUsecase: Get.find(),
         signOutUsecase: Get.find(),
         novoUserUsecase: Get.find(),
       ),

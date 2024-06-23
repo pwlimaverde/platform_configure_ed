@@ -9,6 +9,9 @@ typedef SOutData = Datasource<SignOutModel>;
 typedef NovoUserUsecase = UsecaseBaseCallData<NovaContaModel, NovaContaModel>;
 typedef NovoUserData = Datasource<NovaContaModel>;
 
-typedef SigninUsecase = UsecaseBaseCallData<Usuario, Usuario>;
-typedef SigninData = Datasource<Usuario>;
+typedef SigninGoogleUsecase = UsecaseBaseCallData<GoogleSignInAccount, GoogleSignInAccount>;
+typedef SigninGoogleData = Datasource<GoogleSignInAccount>;
+
+typedef GetUserUsecase = UsecaseBaseCallData<Usuario, Map<String, dynamic>>;
+typedef GetUserData = Datasource<Map<String, dynamic>>;
 
