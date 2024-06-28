@@ -62,31 +62,67 @@ final class FeaturesAuthPresenter {
     }
   }
 
+  Future<Usuario?> _getUsuario() async {
+    final resultGetUser = await _getUsuarioUsecase(
+      ParametrosId(
+        id: account!.id,
+        error: ErrorGeneric(
+          message: "Erro ao fazer login",
+        ),
+      ),
+    );
+
+    switch (resultGetUser) {
+      case SuccessReturn<Usuario>():
+        Logger().d("Get usuario ${resultGetUser.result.id}");
+        return resultGetUser.result;
+      case ErrorReturn<Usuario>():
+        Logger().d("Erro ao buscar usuario");
+        return null;
+    }
+  }
+
   Future<Unit> signIn() async {
-    if (account != null && usuario != null) {
-      return unit;
-    } else {
-      await _signInGoogle();
-      if (account != null) {
-        final result = await _getUsuarioUsecase(
-          ParametrosId(
-            id: account!.id,
-            error: ErrorGeneric(
-              message: "Erro ao fazer login",
-            ),
-          ),
-        );
-        switch (result) {
-          case SuccessReturn<Usuario>():
-            usuario = result.result;
-            Logger().d("usuario ${usuario!.id}");
+    try {
+      if (account != null && usuario != null) {
+        return unit;
+      } else {
+        await _signInGoogle();
+        if (account != null) {
+          final user = await _getUsuario();
+          if (user != null) {
+            usuario = user;
+            Logger().d("usuario carregado ${usuario!.id}");
             return unit;
-          case ErrorReturn<Usuario>():
-            await signOut();
-            Logger().d("usuario não cadastrado");
-            throw result.result.message;
+          } else {
+            final resultNovoUser = await _novoUserUsecase(
+              ParametrosNovoUser(
+                id: account!.id,
+                nome: account!.displayName ?? "",
+                email: account!.email,
+                error: ErrorGeneric(
+                  message: "Erro ao criar novo usuario",
+                ),
+              ),
+            );
+            switch (resultNovoUser) {
+              case SuccessReturn<NovaContaModel>():
+                usuario = await _getUsuario();
+                Logger().d("usuario criado ${usuario!.id}");
+                return unit;
+              case ErrorReturn<NovaContaModel>():
+                Logger().d("Erro ao cadastrar usuario");
+                return unit;
+            }
+          }
+        } else {
+          Logger().d("Erro ao fazer login");
+          return unit;
         }
       }
+    } catch (e) {
+      Logger().d("Erro ao fazer login");
+      signOut();
       return unit;
     }
   }

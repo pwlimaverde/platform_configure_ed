@@ -10,3 +10,18 @@ final class ParametrosId implements ParametersReturnResult {
     required this.error,
   });
 }
+
+final class ParametrosNovoUser implements ParametersReturnResult {
+  final String id;
+  final String nome;
+  final String email;
+  @override
+  final AppError error;
+
+  ParametrosNovoUser({
+    required this.id,
+    required this.nome,
+    required this.email,
+    required this.error,
+  });
+}

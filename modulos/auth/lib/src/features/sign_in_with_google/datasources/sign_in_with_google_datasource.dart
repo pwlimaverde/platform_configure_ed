@@ -1,6 +1,7 @@
 import 'package:dependencies/dependencies.dart';
 
-final class SignInWithGoogleDatasource implements Datasource<GoogleSignInAccount> {
+final class SignInWithGoogleDatasource
+    implements Datasource<GoogleSignInAccount> {
   final GoogleSignIn signIn;
 
   SignInWithGoogleDatasource({
@@ -12,6 +13,7 @@ final class SignInWithGoogleDatasource implements Datasource<GoogleSignInAccount
       final account = await signIn.signIn();
 
       if (account != null) {
+        await signIn.requestScopes(scopes);
         return account;
       } else {
         throw Exception("Usuario não cadastrado!");

@@ -47,10 +47,12 @@ class AuthBinding implements Bindings {
     Get.lazyPut<GoogleSignIn>(
       () => FeaturesServicePresenter.to.signIn,
     );
-
+    Get.lazyPut<Uuid>(
+      () => const Uuid(),
+    );
     Get.lazyPut<NovoUserData>(
       () => NovaContaDatasource(
-        signIn: Get.find(),
+        uuid: Get.find(),
         scopes: scopes,
         externalStorage: Get.find(),
       ),

@@ -18,38 +18,6 @@ class LoginPage extends GetView<AuthController> {
               width: 80,
               height: 80,
               child: IconButton(
-                  onPressed: () {
-                    FeaturesAuthPresenter.to.novaConta();
-                    // controller.signInGoogleLogin(
-                    //   onSuccess: () {
-                    //     Get.snackbar(
-                    //       "Bem vindo",
-                    //       'Login efetuado com sucesso',
-                    //       icon: const Icon(FontAwesomeIcons.check),
-                    //       snackPosition: SnackPosition.BOTTOM,
-                    //     );
-                    //     Future.delayed(const Duration(seconds: 2)).then((_) {
-                    //       Get.offAllNamed(Routes.home.caminho);
-                    //     });
-                    //   },
-                    //   onFail: () {
-                    //     Get.snackbar(
-                    //       'Olá',
-                    //       'Não foi possível fazer o login',
-                    //       icon: const Icon(FontAwesomeIcons.faceMeh),
-                    //       snackPosition: SnackPosition.BOTTOM,
-                    //     );
-                    //   },
-                    // );
-                  },
-                  icon: const FaIcon(FontAwesomeIcons.newspaper)),
-            ),
-          ),
-          Center(
-            child: SizedBox(
-              width: 80,
-              height: 80,
-              child: IconButton(
                   onPressed: FeaturesAuthPresenter.to.signIn,
                   icon: const FaIcon(FontAwesomeIcons.google)),
             ),
