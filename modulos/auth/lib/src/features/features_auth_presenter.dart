@@ -44,7 +44,6 @@ final class FeaturesAuthPresenter {
     final data = await _novoUserUsecase(NoParams());
     switch (data) {
       case SuccessReturn<NovaContaModel>():
-        Logger().d("novaConta ok");
         return unit;
       case ErrorReturn<NovaContaModel>():
         throw data.result.message;
@@ -74,10 +73,8 @@ final class FeaturesAuthPresenter {
 
     switch (resultGetUser) {
       case SuccessReturn<Usuario>():
-        Logger().d("Get usuario ${resultGetUser.result.id}");
         return resultGetUser.result;
       case ErrorReturn<Usuario>():
-        Logger().d("Erro ao buscar usuario");
         return null;
     }
   }
@@ -92,7 +89,6 @@ final class FeaturesAuthPresenter {
           final user = await _getUsuario();
           if (user != null) {
             usuario = user;
-            Logger().d("usuario carregado ${usuario!.id}");
             return unit;
           } else {
             final resultNovoUser = await _novoUserUsecase(
@@ -108,20 +104,16 @@ final class FeaturesAuthPresenter {
             switch (resultNovoUser) {
               case SuccessReturn<NovaContaModel>():
                 usuario = await _getUsuario();
-                Logger().d("usuario criado ${usuario!.id}");
                 return unit;
               case ErrorReturn<NovaContaModel>():
-                Logger().d("Erro ao cadastrar usuario");
                 return unit;
             }
           }
         } else {
-          Logger().d("Erro ao fazer login");
           return unit;
         }
       }
     } catch (e) {
-      Logger().d("Erro ao fazer login");
       signOut();
       return unit;
     }
@@ -131,7 +123,6 @@ final class FeaturesAuthPresenter {
     final data = await _signOutUsecase(NoParams());
     switch (data) {
       case SuccessReturn<SignOutModel>():
-        Logger().d("signOut ok");
         usuario = null;
         account = null;
         return unit;

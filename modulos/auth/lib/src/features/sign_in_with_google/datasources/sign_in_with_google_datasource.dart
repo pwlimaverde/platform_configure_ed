@@ -11,15 +11,23 @@ final class SignInWithGoogleDatasource
   Future<GoogleSignInAccount> call(NoParams parameters) async {
     try {
       final account = await signIn.signIn();
-
       if (account != null) {
-        await signIn.requestScopes(scopes);
-        return account;
+        final checkAccessScopes = await signIn.canAccessScopes(scopes);
+        if (checkAccessScopes) {
+          return account;
+        } else {
+          final requestAccess = await signIn.requestScopes(scopes);
+          if (requestAccess) {
+            return account;
+          } else {
+            throw Exception("Erro ao fazer o login com google. Acesso ao Driver Negado.");
+          }
+        }
       } else {
-        throw Exception("Usuario não cadastrado!");
+        throw Exception("Erro ao fazer o login com google.");
       }
     } catch (e) {
-      throw Exception("Erro ao carregar configurações do banco de dados");
+      throw Exception("Erro ao fazer o login com google.");
     }
   }
 }
