@@ -39,6 +39,15 @@ class LoginPage extends GetView<LoginController> {
                   icon: const FaIcon(FontAwesomeIcons.arrowRightFromBracket)),
             ),
           ),
+          Center(
+            child: SizedBox(
+              width: 80,
+              height: 80,
+              child: IconButton(
+                  onPressed: controller.testeSig,
+                  icon: const FaIcon(FontAwesomeIcons.adn)),
+            ),
+          ),
         ],
       ),
     );

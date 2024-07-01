@@ -23,7 +23,7 @@ final class AuthController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _setCurrentAccount();
+    
     // _signIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) async {
     //   if (account != null) {
     //     final user = await FeaturesAuthPresenter.to.getUsuario(account.id);
@@ -45,6 +45,8 @@ final class AuthController extends GetxController {
       Logger().f(data);
     });
   }
+
+  
 
   Future<void> signIn() async {
     if (usuario != null && account != null) {
@@ -69,7 +71,7 @@ final class AuthController extends GetxController {
     }
   }
 
-Future<void> _setCurrentAccount() async{
+Future<void> setCurrentAccount() async{
   _account2.bindStream(await FeaturesAuthPresenter.to.currentAccountGoogle());
 }
   static AuthController get to => Get.find<AuthController>();

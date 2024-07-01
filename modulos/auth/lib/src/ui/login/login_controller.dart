@@ -102,4 +102,8 @@ class LoginController extends GetxController {
   Future<void> logOut() async {
     await AuthController.to.signOut();
   }
+
+  Future<void> testeSig() async {
+    await AuthController.to.setCurrentAccount();
+  }
 }
