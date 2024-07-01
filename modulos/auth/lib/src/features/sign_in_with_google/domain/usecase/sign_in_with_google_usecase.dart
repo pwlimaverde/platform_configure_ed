@@ -1,6 +1,6 @@
 import 'package:dependencies/dependencies.dart';
-final class SignInWithGooleUsecase extends UsecaseBaseCallData<GoogleSignInAccount, GoogleSignInAccount> {
-  SignInWithGooleUsecase(super.datasource);
+final class SignInWithGoogleUsecase extends UsecaseBaseCallData<GoogleSignInAccount, GoogleSignInAccount> {
+  SignInWithGoogleUsecase(super.datasource);
 
   @override
   Future<ReturnSuccessOrError<GoogleSignInAccount>> call(

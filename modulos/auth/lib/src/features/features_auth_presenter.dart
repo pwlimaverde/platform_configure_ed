@@ -12,8 +12,10 @@ final class FeaturesAuthPresenter {
   final NovoUserUsecase _novoUserUsecase;
   final SOutUsecase _signOutUsecase;
   final GetUserUsecase _getUsuarioUsecase;
+  final CAGoogleUsecase _caGoogleUsecase;
 
   FeaturesAuthPresenter._({
+    required CAGoogleUsecase caGoogleUsecase,
     required SigninGoogleUsecase signinGoogleUsecase,
     required NovoUserUsecase novoUserUsecase,
     required SOutUsecase signOutUsecase,
@@ -21,9 +23,11 @@ final class FeaturesAuthPresenter {
   })  : _signinGoogleUsecase = signinGoogleUsecase,
         _signOutUsecase = signOutUsecase,
         _getUsuarioUsecase = getUsuarioUsecase,
+        _caGoogleUsecase = caGoogleUsecase,
         _novoUserUsecase = novoUserUsecase;
 
   factory FeaturesAuthPresenter({
+    required CAGoogleUsecase caGoogleUsecase,
     required SigninGoogleUsecase signinGoogleUsecase,
     required NovoUserUsecase novoUserUsecase,
     required SOutUsecase signOutUsecase,
@@ -33,6 +37,7 @@ final class FeaturesAuthPresenter {
         getUsuarioUsecase: getUsuarioUsecase,
         signinGoogleUsecase: signinGoogleUsecase,
         novoUserUsecase: novoUserUsecase,
+        caGoogleUsecase: caGoogleUsecase,
         signOutUsecase: signOutUsecase);
     return _instance!;
   }
@@ -116,6 +121,19 @@ final class FeaturesAuthPresenter {
         return true;
       case ErrorReturn<SignOutModel>():
         return false;
+    }
+  }
+
+  Future<StCAGoogleData> currentAccountGoogle() async {
+    Logger().f("currentAccountGoogle inicio");
+    final data = await _caGoogleUsecase(NoParams());
+    switch (data) {
+      case SuccessReturn<StCAGoogleData>():
+    Logger().f("currentAccountGoogle ${data.result}");
+        return data.result;
+      case ErrorReturn<StCAGoogleData>():
+    Logger().f("currentAccountGoogle ${data.result}");
+        throw Exception("Erro ao fazer checar a conta google.");
     }
   }
 

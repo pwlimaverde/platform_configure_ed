@@ -1,5 +1,7 @@
 import 'package:dependencies/dependencies.dart';
 import 'auth_controller.dart';
+import 'features/current_account_google/datasources/current_account_google_datasource.dart';
+import 'features/current_account_google/domain/usecase/current_account_google_usecase.dart';
 import 'features/features_auth_presenter.dart';
 import 'features/get_usuario/datasources/get_usuario_datasource.dart';
 import 'features/get_usuario/domain/usecase/get_usuario_usecase.dart';
@@ -47,12 +49,12 @@ class AuthBinding implements Bindings {
       ),
     );
     Get.lazyPut<SigninGoogleUsecase>(
-      () => SignInWithGooleUsecase(
+      () => SignInWithGoogleUsecase(
         Get.find(),
       ),
     );
-    Get.lazyPut<GoogleSignIn>(
-      () => FeaturesServicePresenter.to.signIn,
+    Get.put<GoogleSignIn>(
+      FeaturesServicePresenter.to.signIn,
     );
     Get.lazyPut<Uuid>(
       () => const Uuid(),
@@ -80,8 +82,19 @@ class AuthBinding implements Bindings {
         Get.find(),
       ),
     );
+    Get.lazyPut<CAGoogleData>(
+      () => CurrentAccountGoogleDatasource(
+        signIn: Get.find(),
+      ),
+    );
+    Get.lazyPut<CAGoogleUsecase>(
+      () => CurrentAccountGoogleUsecase(
+        Get.find(),
+      ),
+    );
     Get.put<FeaturesAuthPresenter>(
       FeaturesAuthPresenter(
+        caGoogleUsecase: Get.find(),
         getUsuarioUsecase: Get.find(),
         signinGoogleUsecase: Get.find(),
         signOutUsecase: Get.find(),

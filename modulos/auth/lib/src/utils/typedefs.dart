@@ -15,3 +15,8 @@ typedef SigninGoogleData = Datasource<GoogleSignInAccount>;
 typedef GetUserUsecase = UsecaseBaseCallData<Usuario, Map<String, dynamic>>;
 typedef GetUserData = Datasource<Map<String, dynamic>>;
 
+typedef CAGoogleUsecase = UsecaseBaseCallData<StCAGoogleData, StCAGoogleData>;
+typedef CAGoogleData = Datasource<StCAGoogleData>;
+typedef StCAGoogleData = Stream<GoogleSignInAccount?>;
+
+

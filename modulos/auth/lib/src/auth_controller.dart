@@ -17,24 +17,33 @@ final class AuthController extends GetxController {
   final _account = Rxn<GoogleSignInAccount>();
   GoogleSignInAccount? get account => _account.value;
 
+  final _account2 = Rxn<GoogleSignInAccount>();
+  GoogleSignInAccount? get account2 => _account.value;
+
   @override
   void onInit() {
     super.onInit();
-    _signIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) async {
-      if (account != null) {
-        final user = await FeaturesAuthPresenter.to.getUsuario(account.id);
-        final access = await _signIn.requestScopes(scopes);
-        if (user != null && access == true) {
-          _account(account);
-          _usuario(user);
-        } else {
-          signOut();
-          _account.value = null;
-          _usuario.value = null;
-        }
-      }
+    _setCurrentAccount();
+    // _signIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) async {
+    //   if (account != null) {
+    //     final user = await FeaturesAuthPresenter.to.getUsuario(account.id);
+    //     final access = await _signIn.requestScopes(scopes);
+    //     if (user != null && access == true) {
+    //       _account(account);
+    //       _usuario(user);
+    //     } else {
+    //       signOut();
+    //       _account.value = null;
+    //       _usuario.value = null;
+    //     }
+    //   }
+    // });
+    // _signIn.signInSilently();
+
+    _account2.listen((data){
+      Logger().f("account2 teste");
+      Logger().f(data);
     });
-    _signIn.signInSilently();
   }
 
   Future<void> signIn() async {
@@ -60,5 +69,9 @@ final class AuthController extends GetxController {
     }
   }
 
+Future<void> _setCurrentAccount() async{
+  _account2.bindStream(await FeaturesAuthPresenter.to.currentAccountGoogle());
+}
   static AuthController get to => Get.find<AuthController>();
 }
+
