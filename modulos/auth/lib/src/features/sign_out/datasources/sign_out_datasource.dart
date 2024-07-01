@@ -16,7 +16,7 @@ final class SignOutDatasource implements Datasource<SignOutModel> {
       signIn.signOut();
       return SignOutModel();
     } catch (e) {
-      throw Exception("Erro ao criar a nova conta.");
+      throw Exception("Erro ao fazer o logout.");
     }
   }
 }

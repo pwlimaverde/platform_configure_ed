@@ -17,6 +17,8 @@ final class SignInWithGoogleDatasource
           return account;
         } else {
           final requestAccess = await signIn.requestScopes(scopes);
+          Logger().f("requestAccess");
+          Logger().f(requestAccess);
           if (requestAccess) {
             return account;
           } else {

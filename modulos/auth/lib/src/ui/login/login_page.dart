@@ -1,10 +1,9 @@
 import 'package:dependencies/dependencies.dart';
 import 'package:flutter/material.dart';
 import '../../auth_controller.dart';
+import 'login_controller.dart';
 
-import '../../features/features_auth_presenter.dart';
-
-class LoginPage extends GetView<AuthController> {
+class LoginPage extends GetView<LoginController> {
   const LoginPage({super.key});
 
   @override
@@ -18,7 +17,16 @@ class LoginPage extends GetView<AuthController> {
               width: 80,
               height: 80,
               child: IconButton(
-                  onPressed: FeaturesAuthPresenter.to.signIn,
+                  onPressed: (){
+                    controller.signInGoogleLogin(
+                      onSuccess: () {
+                        Get.snackbar("Sucesso", "Sucesso ao fazer login");
+                      },
+                      onFail: () {
+                        Get.snackbar("Erro", "Erro ao fazer login");
+                      },
+                    );
+                  },
                   icon: const FaIcon(FontAwesomeIcons.google)),
             ),
           ),
@@ -27,7 +35,7 @@ class LoginPage extends GetView<AuthController> {
               width: 80,
               height: 80,
               child: IconButton(
-                  onPressed: FeaturesAuthPresenter.to.signOut,
+                  onPressed: controller.logOut,
                   icon: const FaIcon(FontAwesomeIcons.arrowRightFromBracket)),
             ),
           ),

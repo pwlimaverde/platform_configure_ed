@@ -1,33 +1,64 @@
+import 'dart:async';
+
 import 'package:dependencies/dependencies.dart';
 
-final class AuthController extends GetxController {
-  final usuario = Rxn<Usuario>();
-  final isAuthorized = false.obs;
-  final _googleSignIn = FeaturesServicePresenter.to.signIn;
+import 'features/features_auth_presenter.dart';
 
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  //   _googleSignIn.onCurrentUserChanged
-  //       .listen((GoogleSignInAccount? account) async {
-  //     if (account != null) {
-  //       final registro = Registro(
-  //         colecao: "user",
-  //         documento: account.id,
-  //       );
-  //       final reference = await FeaturesServicePresenter.to.externalStorage
-  //           .read<Map<String, dynamic>>(
-  //         registro,
-  //         false,
-  //       );
-  //       if (reference.isNotEmpty) {
-  //         isAuthorized(await _googleSignIn.canAccessScopes(scopes));
-  //       } else {
-  //         FeaturesServicePresenter.to.signIn.disconnect();
-  //         FeaturesServicePresenter.to.signIn.signOut();
-  //       }
-  //     }
-  //   });
-  //   _googleSignIn.signInSilently();
-  // }
+final class AuthController extends GetxController {
+  final GoogleSignIn _signIn;
+
+  AuthController({
+    required GoogleSignIn googleSignIn,
+  }) : _signIn = googleSignIn;
+
+  final _usuario = Rxn<Usuario>();
+  Usuario? get usuario => _usuario.value;
+
+  final _account = Rxn<GoogleSignInAccount>();
+  GoogleSignInAccount? get account => _account.value;
+
+  @override
+  void onInit() {
+    super.onInit();
+    _signIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) async {
+      if (account != null) {
+        final user = await FeaturesAuthPresenter.to.getUsuario(account.id);
+        final access = await _signIn.requestScopes(scopes);
+        if (user != null && access == true) {
+          _account(account);
+          _usuario(user);
+        } else {
+          signOut();
+          _account.value = null;
+          _usuario.value = null;
+        }
+      }
+    });
+    _signIn.signInSilently();
+  }
+
+  Future<void> signIn() async {
+    if (usuario != null && account != null) {
+      return;
+    }
+    final signInResult = await FeaturesAuthPresenter.to.signIn();
+    if (signInResult != null) {
+      _usuario(signInResult.user);
+      _account(signInResult.account);
+    }
+  }
+
+  Future<void> signOut() async {
+    final result = await FeaturesAuthPresenter.to.signOut();
+    Logger().f("logout");
+    Logger().f(result);
+    if (result) {
+      _usuario.value = null;
+      _account.value = null;
+      Logger().f("user logout");
+      Logger().f(_usuario);
+    }
+  }
+
+  static AuthController get to => Get.find<AuthController>();
 }

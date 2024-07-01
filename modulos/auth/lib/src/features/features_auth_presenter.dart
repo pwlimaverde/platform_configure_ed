@@ -8,9 +8,6 @@ import 'sign_out/domain/model/sign_out_model.dart';
 final class FeaturesAuthPresenter {
   static FeaturesAuthPresenter? _instance;
 
-  Usuario? usuario;
-  GoogleSignInAccount? account;
-
   final SigninGoogleUsecase _signinGoogleUsecase;
   final NovoUserUsecase _novoUserUsecase;
   final SOutUsecase _signOutUsecase;
@@ -40,31 +37,39 @@ final class FeaturesAuthPresenter {
     return _instance!;
   }
 
-  Future<Unit> novaConta() async {
-    final data = await _novoUserUsecase(NoParams());
+  Future<bool> _novaConta(GoogleSignInAccount account) async {
+    final data = await _novoUserUsecase(
+      ParametrosNovoUser(
+        id: account.id,
+        nome: account.displayName ?? "",
+        email: account.email,
+        error: ErrorGeneric(
+          message: "Erro ao criar novo usuario",
+        ),
+      ),
+    );
     switch (data) {
       case SuccessReturn<NovaContaModel>():
-        return unit;
+        return true;
       case ErrorReturn<NovaContaModel>():
-        throw data.result.message;
+        return false;
     }
   }
 
-  Future<Unit> _signInGoogle() async {
+  Future<GoogleSignInAccount?> _signInGoogle() async {
     final data = await _signinGoogleUsecase(NoParams());
     switch (data) {
       case SuccessReturn<GoogleSignInAccount>():
-        account = data.result;
-        return unit;
+        return data.result;
       case ErrorReturn<GoogleSignInAccount>():
-        throw data.result.message;
+        return null;
     }
   }
 
-  Future<Usuario?> _getUsuario() async {
+  Future<Usuario?> getUsuario(String id) async {
     final resultGetUser = await _getUsuarioUsecase(
       ParametrosId(
-        id: account!.id,
+        id: id,
         error: ErrorGeneric(
           message: "Erro ao fazer login",
         ),
@@ -79,55 +84,38 @@ final class FeaturesAuthPresenter {
     }
   }
 
-  Future<Unit> signIn() async {
+  Future<({GoogleSignInAccount account, Usuario user})?> signIn() async {
     try {
-      if (account != null && usuario != null) {
-        return unit;
-      } else {
-        await _signInGoogle();
-        if (account != null) {
-          final user = await _getUsuario();
-          if (user != null) {
-            usuario = user;
-            return unit;
-          } else {
-            final resultNovoUser = await _novoUserUsecase(
-              ParametrosNovoUser(
-                id: account!.id,
-                nome: account!.displayName ?? "",
-                email: account!.email,
-                error: ErrorGeneric(
-                  message: "Erro ao criar novo usuario",
-                ),
-              ),
-            );
-            switch (resultNovoUser) {
-              case SuccessReturn<NovaContaModel>():
-                usuario = await _getUsuario();
-                return unit;
-              case ErrorReturn<NovaContaModel>():
-                return unit;
-            }
-          }
+      final account = await _signInGoogle();
+      if (account != null) {
+        final user = await getUsuario(account.id);
+        if (user != null) {
+          return (account: account, user: user);
         } else {
-          return unit;
+          final resultNovoUser = await _novaConta(account);
+          final user = await getUsuario(account.id);
+          if (resultNovoUser && user != null) {
+            return (account: account, user: user);
+          } else {
+            return null;
+          }
         }
+      } else {
+        return null;
       }
     } catch (e) {
       signOut();
-      return unit;
+      return null;
     }
   }
 
-  Future<Unit> signOut() async {
+  Future<bool> signOut() async {
     final data = await _signOutUsecase(NoParams());
     switch (data) {
       case SuccessReturn<SignOutModel>():
-        usuario = null;
-        account = null;
-        return unit;
+        return true;
       case ErrorReturn<SignOutModel>():
-        throw data.result.message;
+        return false;
     }
   }
 

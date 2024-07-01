@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:dependencies/dependencies.dart';
 
-import '../../features/features_auth_presenter.dart';
+import '../../auth_controller.dart';
 
 class LoginController extends GetxController {
   Future<void> signInGoogleLogin({
@@ -11,10 +11,16 @@ class LoginController extends GetxController {
   }) async {
     try {
       Logger().f("inico signin");
-      await FeaturesAuthPresenter.to.signIn();
+      await AuthController.to.signIn();
       Logger().f("presenter signin");
-      final user = FeaturesAuthPresenter.to.usuario;
-      Logger().f("user signin");
+      final user = AuthController.to.usuario;
+      if (user != null) {
+        Logger().f("user signin");
+        Logger().f(user);
+        onSuccess();
+      } else {
+        onFail();
+      }
 
       // if (user != null) {
       //   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
@@ -88,17 +94,12 @@ class LoginController extends GetxController {
       //         );
       //   }
       // }
-      Logger().f(user);
-      onSuccess();
     } catch (e) {
       onFail();
     }
   }
 
   Future<void> logOut() async {
-    await FirebaseAuth.instance.signOut();
-    await GoogleSignIn().signOut();
+    await AuthController.to.signOut();
   }
-
-  
 }

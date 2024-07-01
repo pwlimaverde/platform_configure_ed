@@ -9,13 +9,20 @@ import 'features/sign_in_with_google/datasources/sign_in_with_google_datasource.
 import 'features/sign_in_with_google/domain/usecase/sign_in_with_google_usecase.dart';
 import 'features/sign_out/datasources/sign_out_datasource.dart';
 import 'features/sign_out/domain/usecase/sign_out_usecase.dart';
+import 'ui/login/login_controller.dart';
 import 'utils/typedefs.dart';
 
 class AuthBinding implements Bindings {
   @override
   void dependencies() {
+    Get.put<LoginController>(
+      LoginController(),
+      permanent: true,
+    );
     Get.put<AuthController>(
-      AuthController(),
+      AuthController(
+        googleSignIn: Get.find(),
+      ),
       permanent: true,
     );
     Get.put<ExternalStorage>(
