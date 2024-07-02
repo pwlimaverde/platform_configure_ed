@@ -1,6 +1,5 @@
 import 'package:dependencies/dependencies.dart';
 import '../../../../utils/parameters.dart';
-import '../interface/external_storage.dart';
 
 final class ExternalStorageUsecase extends UsecaseBaseCallData<
     ExternalStorage, ExternalStorage> {

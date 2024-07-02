@@ -16,8 +16,6 @@ final class ChecarAutorizacaoGoogleDatasource
         return ChecarAutorizacaoGoogleModel();
       } else {
         final requestAccess = await signIn.requestScopes(scopes);
-        Logger().f("requestAccess check");
-        Logger().f(requestAccess);
         if (requestAccess) {
           return ChecarAutorizacaoGoogleModel();
         } else {

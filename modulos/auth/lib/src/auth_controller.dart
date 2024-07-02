@@ -20,9 +20,6 @@ final class AuthController extends GetxController {
         final access = await FeaturesAuthPresenter.to.checarAutorizacaoGoogle();
         if (user != null && access == true) {
           _usuario(user);
-          Logger().f("teste user");
-          Logger().f(user);
-          Logger().f(account);
         } else {
           signOut();
           _account.value = null;
@@ -47,7 +44,8 @@ final class AuthController extends GetxController {
     }
     final signInResult = await FeaturesAuthPresenter.to.signIn();
     if (signInResult != null) {
-      _account(signInResult.account);
+      // _account(signInResult.account);
+      // _usuario(signInResult.user);
     }
   }
 

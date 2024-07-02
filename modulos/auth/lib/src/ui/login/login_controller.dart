@@ -10,13 +10,9 @@ class LoginController extends GetxController {
     required VoidCallback onFail,
   }) async {
     try {
-      Logger().f("inico signin");
       await AuthController.to.signIn();
-      Logger().f("presenter signin");
       final user = AuthController.to.usuario;
       if (user != null) {
-        Logger().f("user signin");
-        Logger().f(user);
         onSuccess();
       } else {
         onFail();
