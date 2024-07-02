@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:dependencies/dependencies.dart';
 
 import '../utils/parameters.dart';
 import '../utils/typedefs.dart';
+import 'checar_autorizacao_google/domain/model/checar_autorizacao_google_model.dart';
 import 'nova_conta/domain/model/nova_conta_model.dart';
 import 'sign_out/domain/model/sign_out_model.dart';
 
@@ -13,8 +16,10 @@ final class FeaturesAuthPresenter {
   final SOutUsecase _signOutUsecase;
   final GetUserUsecase _getUsuarioUsecase;
   final CAGoogleUsecase _caGoogleUsecase;
+  final CkAutGoogleUsecase _ckAutGoogleUsecase;
 
   FeaturesAuthPresenter._({
+    required CkAutGoogleUsecase ckAutGoogleUsecase,
     required CAGoogleUsecase caGoogleUsecase,
     required SigninGoogleUsecase signinGoogleUsecase,
     required NovoUserUsecase novoUserUsecase,
@@ -24,9 +29,11 @@ final class FeaturesAuthPresenter {
         _signOutUsecase = signOutUsecase,
         _getUsuarioUsecase = getUsuarioUsecase,
         _caGoogleUsecase = caGoogleUsecase,
+        _ckAutGoogleUsecase = ckAutGoogleUsecase,
         _novoUserUsecase = novoUserUsecase;
 
   factory FeaturesAuthPresenter({
+    required CkAutGoogleUsecase ckAutGoogleUsecase,
     required CAGoogleUsecase caGoogleUsecase,
     required SigninGoogleUsecase signinGoogleUsecase,
     required NovoUserUsecase novoUserUsecase,
@@ -34,6 +41,7 @@ final class FeaturesAuthPresenter {
     required GetUserUsecase getUsuarioUsecase,
   }) {
     _instance ??= FeaturesAuthPresenter._(
+        ckAutGoogleUsecase: ckAutGoogleUsecase,
         getUsuarioUsecase: getUsuarioUsecase,
         signinGoogleUsecase: signinGoogleUsecase,
         novoUserUsecase: novoUserUsecase,
@@ -102,10 +110,12 @@ final class FeaturesAuthPresenter {
           if (resultNovoUser && user != null) {
             return (account: account, user: user);
           } else {
+            signOut();
             return null;
           }
         }
       } else {
+        signOut();
         return null;
       }
     } catch (e) {
@@ -125,15 +135,22 @@ final class FeaturesAuthPresenter {
   }
 
   Future<StCAGoogleData> currentAccountGoogle() async {
-    Logger().f("currentAccountGoogle inicio");
     final data = await _caGoogleUsecase(NoParams());
     switch (data) {
       case SuccessReturn<StCAGoogleData>():
-    Logger().f("currentAccountGoogle ${data.result}");
         return data.result;
       case ErrorReturn<StCAGoogleData>():
-    Logger().f("currentAccountGoogle ${data.result}");
         throw Exception("Erro ao fazer checar a conta google.");
+    }
+  }
+
+  Future<bool> checarAutorizacaoGoogle() async {
+    final data = await _ckAutGoogleUsecase(NoParams());
+    switch (data) {
+      case SuccessReturn<ChecarAutorizacaoGoogleModel>():
+        return true;
+      case ErrorReturn<ChecarAutorizacaoGoogleModel>():
+        return false;
     }
   }
 

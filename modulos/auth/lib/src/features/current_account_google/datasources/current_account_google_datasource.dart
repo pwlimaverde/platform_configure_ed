@@ -12,10 +12,8 @@ final class CurrentAccountGoogleDatasource
   @override
   Future<StCAGoogleData> call(NoParams parameters) async {
     try {
-      Logger().f("CurrentAccountGoogleDatasource inicio");
-      final account = signIn.onCurrentUserChanged;
-      Logger().f("CurrentAccountGoogleDatasource fim");
-      return account;
+      signIn.signInSilently();
+      return signIn.onCurrentUserChanged;
     } catch (e) {
       throw Exception("Erro ao fazer checar a conta google.");
     }

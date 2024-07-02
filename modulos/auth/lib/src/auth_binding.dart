@@ -1,5 +1,7 @@
 import 'package:dependencies/dependencies.dart';
 import 'auth_controller.dart';
+import 'features/checar_autorizacao_google/datasources/checar_autorizacao_google_datasource.dart';
+import 'features/checar_autorizacao_google/domain/usecase/checar_autorizacao_google_usecase.dart';
 import 'features/current_account_google/datasources/current_account_google_datasource.dart';
 import 'features/current_account_google/domain/usecase/current_account_google_usecase.dart';
 import 'features/features_auth_presenter.dart';
@@ -22,9 +24,7 @@ class AuthBinding implements Bindings {
       permanent: true,
     );
     Get.put<AuthController>(
-      AuthController(
-        googleSignIn: Get.find(),
-      ),
+      AuthController(),
       permanent: true,
     );
     Get.put<ExternalStorage>(
@@ -92,8 +92,19 @@ class AuthBinding implements Bindings {
         Get.find(),
       ),
     );
+    Get.lazyPut<CkAutGoogleData>(
+      () => ChecarAutorizacaoGoogleDatasource(
+        signIn: Get.find(),
+      ),
+    );
+    Get.lazyPut<CkAutGoogleUsecase>(
+      () => ChecarAutorizacaoGoogleUsecase(
+        Get.find(),
+      ),
+    );
     Get.put<FeaturesAuthPresenter>(
       FeaturesAuthPresenter(
+        ckAutGoogleUsecase: Get.find(),
         caGoogleUsecase: Get.find(),
         getUsuarioUsecase: Get.find(),
         signinGoogleUsecase: Get.find(),
