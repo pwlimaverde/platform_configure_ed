@@ -5,12 +5,18 @@ import 'package:dependencies/dependencies.dart';
 import '../utils/parameters.dart';
 import '../utils/typedefs.dart';
 import 'checar_autorizacao_google/domain/model/checar_autorizacao_google_model.dart';
+import 'disconnect_google/domain/model/disconnect_google_model.dart';
+import 'disconnect_google/domain/usecase/disconnect_google_usecase.dart';
 import 'nova_conta/domain/model/nova_conta_model.dart';
+import 'remove_usuario/domain/model/remove_usuario_model.dart';
+import 'remove_usuario/domain/usecase/remove_usuario_usecase.dart';
 import 'sign_out/domain/model/sign_out_model.dart';
 
 final class FeaturesAuthPresenter {
   static FeaturesAuthPresenter? _instance;
 
+  final RemoUserUsecase _remoUserUsecase;
+  final DiscGoogleUsecase _discGoogleUsecase;
   final SigninGoogleUsecase _signinGoogleUsecase;
   final NovoUserUsecase _novoUserUsecase;
   final SOutUsecase _signOutUsecase;
@@ -19,6 +25,8 @@ final class FeaturesAuthPresenter {
   final CkAutGoogleUsecase _ckAutGoogleUsecase;
 
   FeaturesAuthPresenter._({
+    required RemoUserUsecase remoUserUsecase,
+    required DiscGoogleUsecase discGoogleUsecase,
     required CkAutGoogleUsecase ckAutGoogleUsecase,
     required CAGoogleUsecase caGoogleUsecase,
     required SigninGoogleUsecase signinGoogleUsecase,
@@ -30,9 +38,13 @@ final class FeaturesAuthPresenter {
         _getUsuarioUsecase = getUsuarioUsecase,
         _caGoogleUsecase = caGoogleUsecase,
         _ckAutGoogleUsecase = ckAutGoogleUsecase,
+        _remoUserUsecase = remoUserUsecase,
+        _discGoogleUsecase = discGoogleUsecase,
         _novoUserUsecase = novoUserUsecase;
 
   factory FeaturesAuthPresenter({
+    required RemoUserUsecase remoUserUsecase,
+    required DiscGoogleUsecase discGoogleUsecase,
     required CkAutGoogleUsecase ckAutGoogleUsecase,
     required CAGoogleUsecase caGoogleUsecase,
     required SigninGoogleUsecase signinGoogleUsecase,
@@ -46,6 +58,8 @@ final class FeaturesAuthPresenter {
         signinGoogleUsecase: signinGoogleUsecase,
         novoUserUsecase: novoUserUsecase,
         caGoogleUsecase: caGoogleUsecase,
+        discGoogleUsecase: discGoogleUsecase,
+        remoUserUsecase: remoUserUsecase,
         signOutUsecase: signOutUsecase);
     return _instance!;
   }
@@ -97,30 +111,29 @@ final class FeaturesAuthPresenter {
     }
   }
 
-  Future<({GoogleSignInAccount account, Usuario user})?> signIn() async {
+  Future<bool> signIn() async {
     try {
       final account = await _signInGoogle();
       if (account != null) {
         final user = await getUsuario(account.id);
         if (user != null) {
-          return (account: account, user: user);
+          return true;
         } else {
           final resultNovoUser = await _novaConta(account);
           final user = await getUsuario(account.id);
           if (resultNovoUser && user != null) {
-            return (account: account, user: user);
+            return true;
           } else {
             signOut();
-            return null;
+            return false;
           }
         }
       } else {
-        signOut();
-        return null;
+        return false;
       }
     } catch (e) {
       signOut();
-      return null;
+      return false;
     }
   }
 
@@ -150,6 +163,37 @@ final class FeaturesAuthPresenter {
       case SuccessReturn<ChecarAutorizacaoGoogleModel>():
         return true;
       case ErrorReturn<ChecarAutorizacaoGoogleModel>():
+        return false;
+    }
+  }
+
+  Future<bool> apagarConta({required String id, required bool confirmacao,}) async {
+    if (confirmacao) {
+      return await _apagarConta(id);
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> _apagarConta(String id) async {
+    final data = await _discGoogleUsecase(NoParams());
+    switch (data) {
+      case SuccessReturn<DisconnectGoogleModel>():
+       final result = await _remoUserUsecase(
+          ParametrosId(
+            id: id,
+            error: ErrorGeneric(
+              message: "Erro ao remover conta google",
+            ),
+          ),
+        );
+        switch (result) {
+          case SuccessReturn<RemoveUsuarioModel>():
+            return true;
+          case ErrorReturn<RemoveUsuarioModel>():
+            return false;
+        }
+      case ErrorReturn<DisconnectGoogleModel>():
         return false;
     }
   }

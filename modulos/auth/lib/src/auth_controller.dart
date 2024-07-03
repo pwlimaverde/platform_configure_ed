@@ -17,13 +17,18 @@ final class AuthController extends GetxController {
     _account.listen((account) async {
       if (account != null) {
         final user = await FeaturesAuthPresenter.to.getUsuario(account.id);
-        final access = await FeaturesAuthPresenter.to.checarAutorizacaoGoogle();
-        if (user != null && access == true) {
-          _usuario(user);
+        if (user != null) {
+          final access =
+              await FeaturesAuthPresenter.to.checarAutorizacaoGoogle();
+          if (access) {
+            _usuario(user);
+          } else {
+            signOut();
+            _account.value = null;
+            _usuario.value = null;
+          }
         } else {
-          signOut();
-          _account.value = null;
-          _usuario.value = null;
+          signIn();
         }
       } else {
         _account.value = null;
@@ -38,22 +43,34 @@ final class AuthController extends GetxController {
     _setCurrentAccount();
   }
 
-  Future<void> signIn() async {
+  Future<bool> signIn() async {
     if (usuario != null && account != null) {
-      return;
+      return true;
     }
     final signInResult = await FeaturesAuthPresenter.to.signIn();
-    if (signInResult != null) {
-      // _account(signInResult.account);
-      // _usuario(signInResult.user);
-    }
+    return signInResult;
   }
 
-  Future<void> signOut() async {
+  Future<bool> signOut() async {
     final result = await FeaturesAuthPresenter.to.signOut();
     if (result) {
       _usuario.value = null;
       _account.value = null;
+    }
+    return result;
+  }
+
+  Future<bool> apagarConta(bool confirmacao) async {
+    if (usuario != null && account != null) {
+      final result = await FeaturesAuthPresenter.to.apagarConta(
+        id: usuario!.id,
+        confirmacao: confirmacao,
+      );
+      _account.value = null;
+      _usuario.value = null;
+      return result;
+    } else {
+      return false;
     }
   }
 

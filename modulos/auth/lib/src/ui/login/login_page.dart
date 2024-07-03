@@ -16,7 +16,7 @@ class LoginPage extends GetView<LoginController> {
               width: 80,
               height: 80,
               child: IconButton(
-                  onPressed: (){
+                  onPressed: () {
                     controller.signInGoogleLogin(
                       onSuccess: () {
                         Get.snackbar("Sucesso", "Sucesso ao fazer login");
@@ -34,12 +34,59 @@ class LoginPage extends GetView<LoginController> {
               width: 80,
               height: 80,
               child: IconButton(
-                  onPressed: controller.logOut,
+                  onPressed: () {
+                    controller.logOut(
+                      onSuccess: () {
+                        Get.snackbar("Sucesso", "Sucesso ao fazer LogOut");
+                      },
+                      onFail: () {
+                        Get.snackbar("Erro", "Erro ao fazer LogOut");
+                      },
+                    );
+                  },
                   icon: const FaIcon(FontAwesomeIcons.arrowRightFromBracket)),
+            ),
+          ),
+          Center(
+            child: SizedBox(
+              width: 80,
+              height: 80,
+              child: IconButton(
+                  onPressed: () {
+                    mostrarDialogoConfirmacao(onSuccess: () {
+                      controller.apagarConta(
+                        confirmacao: true,
+                        onSuccess: () {
+                          Get.snackbar("Sucesso", "Sucesso ao apagar a conta");
+                        },
+                        onFail: () {
+                          Get.snackbar("Erro", "Erro ao apagar a conta");
+                        },
+                      );
+                      Get.back();
+                    });
+                  },
+                  icon: const FaIcon(FontAwesomeIcons.userXmark)),
             ),
           ),
         ],
       ),
     );
   }
+}
+
+void mostrarDialogoConfirmacao({
+  required VoidCallback onSuccess,
+}) {
+  Get.defaultDialog(
+    title: "Confirmação",
+    middleText: "Tem certeza que deseja apagar sua conta?",
+    textConfirm: "Sim",
+    textCancel: "Não",
+    confirmTextColor: Colors.white,
+    onConfirm: onSuccess,
+    onCancel: () {
+      Get.back(); // Fecha o diálogo
+    },
+  );
 }

@@ -95,7 +95,29 @@ class LoginController extends GetxController {
     }
   }
 
-  Future<void> logOut() async {
-    await AuthController.to.signOut();
+  Future<void> logOut({
+    required VoidCallback onSuccess,
+    required VoidCallback onFail,
+  }) async {
+   final result = await AuthController.to.signOut();
+    if (result) {
+      onSuccess();
+    } else {
+      onFail();
+    }
+  }
+
+  Future<void> apagarConta({
+    required VoidCallback onSuccess,
+    required VoidCallback onFail,
+    required bool confirmacao,
+  }) async {
+    final result = await AuthController.to.apagarConta(confirmacao);
+
+    if (result) {
+      onSuccess();
+    } else {
+      onFail();
+    }
   }
 }
