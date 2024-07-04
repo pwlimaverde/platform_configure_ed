@@ -1,15 +1,13 @@
 import 'package:dependencies/dependencies.dart';
 
-
 class FirebaseExternalStorage implements ExternalStorage {
   final FirebaseFirestore instanceFirebase;
 
   FirebaseExternalStorage({required this.instanceFirebase});
 
   @override
-  Future<T> read<T>(
+  Future<Map<String, dynamic>> readDocument(
     Registro registro,
-    bool isStream,
   ) async {
     try {
       var caminho =
@@ -20,15 +18,84 @@ class FirebaseExternalStorage implements ExternalStorage {
         caminho = caminho.collection(subData.colecao).doc(subData.documento);
         subData = subData.subColecao;
       }
-      if (isStream) {
-        final snapshot = caminho.snapshots();
-        final data = snapshot.map((data) => data.data() ?? <String, dynamic>{});
-        return data as T;
-      } else {
-        final snapshot = await caminho.get();
-        final data = snapshot.data() ?? <String, dynamic>{};
-        return data as T;
+
+      final snapshot = await caminho.get();
+      final data = snapshot.data() ?? <String, dynamic>{};
+      return data;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<Stream<Map<String, dynamic>>> readStreamDocument(
+    Registro registro,
+  ) async {
+    try {
+      var caminho =
+          instanceFirebase.collection(registro.colecao).doc(registro.documento);
+
+      var subData = registro.subColecao;
+      while (subData != null) {
+        caminho = caminho.collection(subData.colecao).doc(subData.documento);
+        subData = subData.subColecao;
       }
+
+      final snapshot = caminho.snapshots();
+      final data = snapshot.map((data) => data.data() ?? <String, dynamic>{});
+      return data;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> readCollection(
+    Registro registro,
+    String colecao,
+  ) async {
+    try {
+      var caminho =
+          instanceFirebase.collection(registro.colecao).doc(registro.documento);
+
+      var subData = registro.subColecao;
+      while (subData != null) {
+        caminho = caminho.collection(subData.colecao).doc(subData.documento);
+        subData = subData.subColecao;
+      }
+
+      var collection = caminho.collection(colecao);
+
+      final snapshot = await collection.get();
+      final data = snapshot.docs.map((data) => data.data()).toList();
+
+      return data;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<Stream<List<Map<String, dynamic>>>> readStreamCollection(
+    Registro registro,
+    String colecao,
+  ) async {
+    try {
+      var caminho =
+          instanceFirebase.collection(registro.colecao).doc(registro.documento);
+
+      var subData = registro.subColecao;
+      while (subData != null) {
+        caminho = caminho.collection(subData.colecao).doc(subData.documento);
+        subData = subData.subColecao;
+      }
+
+      var collection = caminho.collection(colecao);
+
+      final snapshot = collection.snapshots();
+      final data =
+          snapshot.map((data) => data.docs.map((data) => data.data()).toList());
+      return data;
     } catch (e) {
       throw Exception(e);
     }

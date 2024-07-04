@@ -20,9 +20,23 @@ final class RemoveUsuarioDatasource implements Datasource<RemoveUsuarioModel> {
         colecao: "licenca",
         documento: parameters.id,
       );
-      await externalStorage.remove(
-        licenca,
+
+      final listDispositivos = await externalStorage.readStreamCollection(
+        Registro(
+        colecao: "user",
+        documento: parameters.id,
+      ),
+        "dispositivos",
       );
+
+      listDispositivos.listen((event) {
+       Logger().d(event);
+      });
+
+      // await externalStorage.remove(
+      //   licenca,
+      // );
+      
       // final dispositivos = user.subColecao = Registro(
       //   colecao: "dispositivos",
       //   documento: parameters.id,
@@ -31,10 +45,10 @@ final class RemoveUsuarioDatasource implements Datasource<RemoveUsuarioModel> {
       //   dispositivos,
       // );
 
-      user.subColecao = null;
-      await externalStorage.remove(
-        user,
-      );
+      // user.subColecao = null;
+      // await externalStorage.remove(
+      //   user,
+      // );
 
       return RemoveUsuarioModel();
     } catch (e) {

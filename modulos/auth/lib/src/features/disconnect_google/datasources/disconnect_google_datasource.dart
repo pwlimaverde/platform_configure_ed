@@ -12,7 +12,7 @@ final class DisconnectGoogleDatasource implements Datasource<DisconnectGoogleMod
   @override
   Future<DisconnectGoogleModel> call(NoParams parameters) async {
     try {
-      signIn.disconnect();
+      // signIn.disconnect();
       return DisconnectGoogleModel();
     } catch (e) {
       throw Exception("Erro ao remover a conta google.");

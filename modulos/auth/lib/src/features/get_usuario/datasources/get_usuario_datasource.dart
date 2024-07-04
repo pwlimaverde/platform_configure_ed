@@ -15,9 +15,8 @@ final class GetUsuarioDatasource implements Datasource<Map<String, dynamic>> {
         colecao: "user",
         documento: parameters.id,
       );
-      final reference = await externalStorage.read<Map<String, dynamic>>(
+      final reference = await externalStorage.readDocument(
         registro,
-        false,
       );
       if (reference.isNotEmpty) {
         return reference;
