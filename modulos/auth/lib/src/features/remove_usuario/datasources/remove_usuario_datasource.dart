@@ -12,14 +12,31 @@ final class RemoveUsuarioDatasource implements Datasource<RemoveUsuarioModel> {
   @override
   Future<RemoveUsuarioModel> call(ParametrosId parameters) async {
     try {
-      final registro = Registro(
+      var user = Registro(
         colecao: "user",
         documento: parameters.id,
       );
-      await externalStorage.remove(
-        registro,
+      final licenca = user.subColecao = Registro(
+        colecao: "licenca",
+        documento: parameters.id,
       );
-        return RemoveUsuarioModel();
+      await externalStorage.remove(
+        licenca,
+      );
+      // final dispositivos = user.subColecao = Registro(
+      //   colecao: "dispositivos",
+      //   documento: parameters.id,
+      // );
+      // await externalStorage.remove(
+      //   dispositivos,
+      // );
+
+      user.subColecao = null;
+      await externalStorage.remove(
+        user,
+      );
+
+      return RemoveUsuarioModel();
     } catch (e) {
       throw Exception("Erro ao remover o usuario do banco de dados");
     }

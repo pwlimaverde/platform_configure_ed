@@ -6,10 +6,8 @@ import '../utils/parameters.dart';
 import '../utils/typedefs.dart';
 import 'checar_autorizacao_google/domain/model/checar_autorizacao_google_model.dart';
 import 'disconnect_google/domain/model/disconnect_google_model.dart';
-import 'disconnect_google/domain/usecase/disconnect_google_usecase.dart';
 import 'nova_conta/domain/model/nova_conta_model.dart';
 import 'remove_usuario/domain/model/remove_usuario_model.dart';
-import 'remove_usuario/domain/usecase/remove_usuario_usecase.dart';
 import 'sign_out/domain/model/sign_out_model.dart';
 
 final class FeaturesAuthPresenter {

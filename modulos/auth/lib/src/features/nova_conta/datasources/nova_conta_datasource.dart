@@ -18,7 +18,7 @@ final class NovaContaDatasource implements Datasource<NovaContaModel> {
   Future<NovaContaModel> call(ParametrosNovoUser parameters) async {
     try {
           final licenca = Licenca(
-            id: uuid.v8(),
+            id: parameters.id,
           );
           await externalStorage.write(
             Registro(
