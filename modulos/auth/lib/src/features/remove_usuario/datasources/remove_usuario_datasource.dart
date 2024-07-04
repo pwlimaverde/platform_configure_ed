@@ -12,43 +12,48 @@ final class RemoveUsuarioDatasource implements Datasource<RemoveUsuarioModel> {
   @override
   Future<RemoveUsuarioModel> call(ParametrosId parameters) async {
     try {
-      var user = Registro(
+      final user = Registro(
         colecao: "user",
-        documento: parameters.id,
-      );
-      final licenca = user.subColecao = Registro(
-        colecao: "licenca",
         documento: parameters.id,
       );
 
-      final listDispositivos = await externalStorage.readStreamCollection(
-        Registro(
-        colecao: "user",
-        documento: parameters.id,
-      ),
+      final registroLicenca = user.copyWith(
+        subColecao: Registro(
+          colecao: "licenca",
+          documento: parameters.id,
+        ),
+      );
+
+      await externalStorage.remove(
+        registroLicenca,
+      );
+
+      final listDispositivosData = await externalStorage.readCollection(
+        user,
         "dispositivos",
       );
 
-      listDispositivos.listen((event) {
-       Logger().d(event);
-      });
+      if (listDispositivosData.isNotEmpty) {
+        final listDispositivos =
+            listDispositivosData.map((e) => Dispositivo.fromMap(e)).toList();
 
-      // await externalStorage.remove(
-      //   licenca,
-      // );
-      
-      // final dispositivos = user.subColecao = Registro(
-      //   colecao: "dispositivos",
-      //   documento: parameters.id,
-      // );
-      // await externalStorage.remove(
-      //   dispositivos,
-      // );
+        for (Dispositivo dispositivo in listDispositivos) {
+          final registroDispositivo = user.copyWith(
+            subColecao: Registro(
+              colecao: "dispositivos",
+              documento: dispositivo.id,
+            ),
+          );
 
-      // user.subColecao = null;
-      // await externalStorage.remove(
-      //   user,
-      // );
+          await externalStorage.remove(
+            registroDispositivo,
+          );
+        }
+      }
+
+      await externalStorage.remove(
+        user,
+      );
 
       return RemoveUsuarioModel();
     } catch (e) {

@@ -36,42 +36,6 @@ final class NovaContaDatasource implements Datasource<NovaContaModel> {
           ),
         ),
       );
-
-      final dispositivo1 = Dispositivo(
-        id: "1",
-        nome: "nome",
-        product: "product",
-        model: "model",
-        brand: "brand",
-      );
-
-      final dispositivo2 = Dispositivo(
-        id: "2",
-        nome: "nome",
-        product: "product",
-        model: "model",
-        brand: "brand",
-      );
-
-      await externalStorage.write(Registro(
-        colecao: "user",
-        documento: parameters.id,
-        subColecao: Registro(
-          colecao: "dispositivos",
-          documento: dispositivo1.id,
-          dados: dispositivo1.toMap(),
-        ),
-      ));
-
-      await externalStorage.write(Registro(
-        colecao: "user",
-        documento: parameters.id,
-        subColecao: Registro(
-          colecao: "dispositivos",
-          documento: dispositivo2.id,
-          dados: dispositivo2.toMap(),
-        ),
-      ));
       return NovaContaModel();
     } catch (e) {
       throw Exception("Erro ao criar a nova conta.");
