@@ -1,12 +1,14 @@
 name: painel_configure_ed
 description: "Painel de controle para o app Android Configure ED."
-publish_to: 'none' 
+publish_to: "none"
 version: 0.4.0
 environment:
-  sdk: '>=3.4.0 <4.0.0'
+  sdk: ">=3.4.0 <4.0.0"
 dependencies:
   flutter:
     sdk: flutter
+
+  google_sign_in_web: ^0.12.4
 
   #Dependencias internas
   dependencies:

@@ -2,17 +2,15 @@ import 'dart:ui';
 
 import 'package:dependencies/dependencies.dart';
 
-import '../../auth_controller.dart';
-
 class LoginController extends GetxController {
   Future<void> signInGoogleLogin({
     required VoidCallback onSuccess,
     required VoidCallback onFail,
   }) async {
     try {
-      await AuthController.to.signIn();
+      final result = await AuthController.to.signIn();
       final user = AuthController.to.usuario;
-      if (user != null) {
+      if (result && user != null) {
         onSuccess();
       } else {
         onFail();
@@ -99,7 +97,7 @@ class LoginController extends GetxController {
     required VoidCallback onSuccess,
     required VoidCallback onFail,
   }) async {
-   final result = await AuthController.to.signOut();
+    final result = await AuthController.to.signOut();
     if (result) {
       onSuccess();
     } else {

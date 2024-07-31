@@ -119,7 +119,7 @@ final class FeaturesAuthPresenter {
         } else {
           final resultNovoUser = await _novaConta(account);
           final user = await getUsuario(account.id);
-          if (resultNovoUser && user != null) {
+          if (resultNovoUser == true && user != null) {
             return true;
           } else {
             signOut();
