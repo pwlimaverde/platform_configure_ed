@@ -16,18 +16,8 @@ final class AuthController extends GetxController {
     super.onInit();
     _account.listen((account) async {
       if (account != null) {
-        final user = await FeaturesAuthPresenter.to.getUsuario(account.id);
-        if (user != null) {
-          final access =
-              await FeaturesAuthPresenter.to.checarAutorizacaoGoogle();
-          if (access) {
-            _usuario(user);
-          } else {
-            signOut();
-            _account.value = null;
-            _usuario.value = null;
-          }
-        } else {
+        final result = await _setCurrentUser(account.id);
+        if (!result) {
           signIn();
         }
       } else {
@@ -48,7 +38,12 @@ final class AuthController extends GetxController {
       return true;
     }
     final signInResult = await FeaturesAuthPresenter.to.signIn();
-    return signInResult;
+    final userResult = await _setCurrentUser(account?.id ?? "0");
+    if (signInResult && userResult) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   Future<bool> signOut() async {
@@ -66,9 +61,13 @@ final class AuthController extends GetxController {
         id: usuario!.id,
         confirmacao: confirmacao,
       );
-      _account.value = null;
-      _usuario.value = null;
-      return result;
+      if (result) {
+        _account.value = null;
+        _usuario.value = null;
+        return true;
+      } else {
+        return false;
+      }
     } else {
       return false;
     }
@@ -77,6 +76,24 @@ final class AuthController extends GetxController {
   Future<void> _setCurrentAccount() async {
     final stream = await FeaturesAuthPresenter.to.currentAccountGoogle();
     _account.bindStream(stream);
+  }
+
+  Future<bool> _setCurrentUser(String id) async {
+    final user = await FeaturesAuthPresenter.to.getUsuario(id);
+    if (user != null) {
+      final access = await FeaturesAuthPresenter.to.checarAutorizacaoGoogle();
+      if (access) {
+        _usuario(user);
+        return true;
+      } else {
+        signOut();
+        _account.value = null;
+        _usuario.value = null;
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 
   static AuthController get to => Get.find<AuthController>();

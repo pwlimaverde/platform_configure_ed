@@ -16,8 +16,7 @@ final class GetUsuarioUsecase
     switch (resultDatacource) {
       case SuccessReturn<Map<String, dynamic>>():
         final usuario = Usuario.fromMap(resultDatacource.result);
-        Logger().d("teste user");
-          Logger().d(usuario);
+        
         return SuccessReturn(success: usuario);
       case ErrorReturn<Map<String, dynamic>>():
         return ErrorReturn(

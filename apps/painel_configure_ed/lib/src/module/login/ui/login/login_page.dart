@@ -58,6 +58,7 @@ class LoginPage extends GetView<LoginController> {
                         confirmacao: true,
                         onSuccess: () {
                           Get.snackbar("Sucesso", "Sucesso ao apagar a conta");
+                          Get.toNamed("/login");
                         },
                         onFail: () {
                           Get.snackbar("Erro", "Erro ao apagar a conta");

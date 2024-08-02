@@ -9,8 +9,8 @@ class LoginController extends GetxController {
   }) async {
     try {
       final result = await AuthController.to.signIn();
-      final user = AuthController.to.usuario;
-      if (result && user != null) {
+
+      if (result) {
         onSuccess();
       } else {
         onFail();
