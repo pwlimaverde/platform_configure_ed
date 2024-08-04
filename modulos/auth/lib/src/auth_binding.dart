@@ -1,5 +1,4 @@
 import 'package:dependencies/dependencies.dart';
-import 'auth_controller.dart';
 import 'features/checar_autorizacao_google/datasources/checar_autorizacao_google_datasource.dart';
 import 'features/checar_autorizacao_google/domain/usecase/checar_autorizacao_google_usecase.dart';
 import 'features/current_account_google/datasources/current_account_google_datasource.dart';
