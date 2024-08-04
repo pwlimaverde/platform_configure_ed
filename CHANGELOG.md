@@ -1,3 +1,6 @@
+## 0.5.0
+1 - Configuração inicial do login com google em android_configure_ed
+
 ## 0.4.0
 1 - Configuração inicial do login com google em painel_configure_ed
 

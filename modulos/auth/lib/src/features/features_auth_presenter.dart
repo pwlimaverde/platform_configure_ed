@@ -135,6 +135,33 @@ final class FeaturesAuthPresenter {
     }
   }
 
+  Future<bool> signInAndroid() async {
+    try {
+      final account = await _signInGoogle();
+      Logger().d("teste account - $account");
+      if (account != null) {
+        final user = await getUsuario(account.id);
+        if (user != null) {
+          return true;
+        } else {
+          final resultNovoUser = await _novaConta(account);
+          final user = await getUsuario(account.id);
+          if (resultNovoUser == true && user != null) {
+            return true;
+          } else {
+            signOut();
+            return false;
+          }
+        }
+      } else {
+        return false;
+      }
+    } catch (e) {
+      signOut();
+      return false;
+    }
+  }
+
   Future<bool> signOut() async {
     final data = await _signOutUsecase(NoParams());
     switch (data) {
