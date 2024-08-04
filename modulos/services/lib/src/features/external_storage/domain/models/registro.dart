@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 class Registro {
   final String colecao;
