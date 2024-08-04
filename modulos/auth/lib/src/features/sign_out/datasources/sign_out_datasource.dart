@@ -12,11 +12,10 @@ final class SignOutDatasource implements Datasource<SignOutModel> {
   @override
   Future<SignOutModel> call(NoParams parameters) async {
     try {
-      signIn.disconnect();
       signIn.signOut();
       return SignOutModel();
     } catch (e) {
-      throw Exception("Erro ao criar a nova conta.");
+      throw Exception("Erro ao fazer o logout.");
     }
   }
 }

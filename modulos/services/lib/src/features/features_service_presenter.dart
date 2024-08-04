@@ -3,7 +3,6 @@ import 'package:dependencies/dependencies.dart';
 import '../utils/parameters.dart';
 import '../utils/typedefs.dart';
 import 'check_connect/domain/model/check_connect_model.dart';
-import 'external_storage/domain/interface/external_storage.dart';
 import 'local_storage/domain/interface/local_storage.dart';
 
 final class FeaturesServicePresenter {
