@@ -15,7 +15,6 @@ import 'features/permission/datasource/permission_datasource.dart';
 import 'features/permission/domain/usecase/permission_usecase.dart';
 import 'features/widgets_flutter_binding/datasource/widgets_flutter_binding_datasource.dart';
 import 'features/widgets_flutter_binding/domain/usecase/widgets_flutter_binding_usecase.dart';
-import 'utils/scopes.dart';
 import 'utils/typedefs.dart';
 
 final class ServiceBindings implements Bindings {

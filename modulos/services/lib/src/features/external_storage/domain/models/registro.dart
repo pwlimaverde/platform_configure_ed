@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 
 class Registro {
   final String colecao;
@@ -10,4 +11,18 @@ class Registro {
     this.subColecao,
     this.dados,
   });
+
+  Registro copyWith({
+    String? colecao,
+    String? documento,
+    Registro? subColecao,
+    Map<String, dynamic>? dados,
+  }) {
+    return Registro(
+      colecao: colecao ?? this.colecao,
+      documento: documento ?? this.documento,
+      subColecao: subColecao ?? this.subColecao,
+      dados: dados ?? this.dados,
+    );
+  }
 }

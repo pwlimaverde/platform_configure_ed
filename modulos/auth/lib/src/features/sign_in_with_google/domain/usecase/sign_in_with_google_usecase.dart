@@ -1,9 +1,9 @@
 import 'package:dependencies/dependencies.dart';
-final class SignInUsecase extends UsecaseBaseCallData<Usuario, Usuario> {
-  SignInUsecase(super.datasource);
+final class SignInWithGoogleUsecase extends UsecaseBaseCallData<GoogleSignInAccount, GoogleSignInAccount> {
+  SignInWithGoogleUsecase(super.datasource);
 
   @override
-  Future<ReturnSuccessOrError<Usuario>> call(
+  Future<ReturnSuccessOrError<GoogleSignInAccount>> call(
       ParametersReturnResult parameters) async {
     final resultDatacource = await resultDatasource(
       parameters: parameters,

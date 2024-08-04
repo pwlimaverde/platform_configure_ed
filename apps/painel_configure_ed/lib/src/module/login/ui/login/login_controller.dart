@@ -2,19 +2,19 @@ import 'dart:ui';
 
 import 'package:dependencies/dependencies.dart';
 
-import '../../features/features_auth_presenter.dart';
-
 class LoginController extends GetxController {
   Future<void> signInGoogleLogin({
     required VoidCallback onSuccess,
     required VoidCallback onFail,
   }) async {
     try {
-      Logger().f("inico signin");
-      await FeaturesAuthPresenter.to.signIn();
-      Logger().f("presenter signin");
-      final user = FeaturesAuthPresenter.to.usuario;
-      Logger().f("user signin");
+      final result = await AuthController.to.signIn();
+
+      if (result) {
+        onSuccess();
+      } else {
+        onFail();
+      }
 
       // if (user != null) {
       //   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
@@ -88,17 +88,34 @@ class LoginController extends GetxController {
       //         );
       //   }
       // }
-      Logger().f(user);
-      onSuccess();
     } catch (e) {
       onFail();
     }
   }
 
-  Future<void> logOut() async {
-    await FirebaseAuth.instance.signOut();
-    await GoogleSignIn().signOut();
+  Future<void> logOut({
+    required VoidCallback onSuccess,
+    required VoidCallback onFail,
+  }) async {
+    final result = await AuthController.to.signOut();
+    if (result) {
+      onSuccess();
+    } else {
+      onFail();
+    }
   }
 
-  
+  Future<void> apagarConta({
+    required VoidCallback onSuccess,
+    required VoidCallback onFail,
+    required bool confirmacao,
+  }) async {
+    final result = await AuthController.to.apagarConta(confirmacao);
+
+    if (result) {
+      onSuccess();
+    } else {
+      onFail();
+    }
+  }
 }
