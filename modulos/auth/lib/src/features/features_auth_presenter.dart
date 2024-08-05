@@ -138,7 +138,6 @@ final class FeaturesAuthPresenter {
   Future<bool> signInAndroid() async {
     try {
       final account = await _signInGoogle();
-      Logger().d("teste account - $account");
       if (account != null) {
         final user = await getUsuario(account.id);
         if (user != null) {

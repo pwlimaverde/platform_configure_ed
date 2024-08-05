@@ -51,7 +51,7 @@ final class AuthController extends GetxController {
       return true;
     }
     final signInResult = await FeaturesAuthPresenter.to.signInAndroid();
-    Logger().d("teste login android - $signInResult");
+
     final userResult = await _setCurrentUser(account?.id ?? "0");
     if (signInResult && userResult) {
       return true;
