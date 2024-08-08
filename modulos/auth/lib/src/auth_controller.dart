@@ -17,6 +17,7 @@ final class AuthController extends GetxController {
     _account.listen((account) async {
       if (account != null) {
         final result = await _setCurrentUser(account.id);
+        Logger().d("teste controle account - $result");
         if (!result) {
           signIn();
         }
@@ -95,7 +96,9 @@ final class AuthController extends GetxController {
   Future<bool> _setCurrentUser(String id) async {
     final user = await FeaturesAuthPresenter.to.getUsuario(id);
     if (user != null) {
+    Logger().d("teste getuser controller - $user");
       final access = await FeaturesAuthPresenter.to.checarAutorizacaoGoogle();
+    Logger().d("teste access controller - $access");
       if (access) {
         _usuario(user);
         return true;

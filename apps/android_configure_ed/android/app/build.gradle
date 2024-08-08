@@ -58,3 +58,12 @@ android {
 flutter {
     source = "../.."
 }
+
+dependencies {
+  // Import the Firebase BoM
+  implementation platform('com.google.firebase:firebase-bom:33.1.2')
+//   implementation 'com.google.android.gms:play-services-base:17.6.0'
+// implementation 'com.google.android.gms:play-services-basement:17.6.0'
+
+}
+
