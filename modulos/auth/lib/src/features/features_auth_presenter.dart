@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dependencies/dependencies.dart';
+import 'package:flutter/foundation.dart' as foundation;
 
 import '../utils/parameters.dart';
 import '../utils/typedefs.dart';
@@ -114,9 +115,7 @@ final class FeaturesAuthPresenter {
       final account = await _signInGoogle();
       if (account != null) {
         final user = await getUsuario(account.id);
-        if (user != null) {
-          return true;
-        } else {
+        if (foundation.kIsWeb || foundation.kIsWasm && user == null) {
           final resultNovoUser = await _novaConta(account);
           final user = await getUsuario(account.id);
           if (resultNovoUser == true && user != null) {
@@ -125,32 +124,11 @@ final class FeaturesAuthPresenter {
             signOut();
             return false;
           }
-        }
-      } else {
-        return false;
-      }
-    } catch (e) {
-      signOut();
-      return false;
-    }
-  }
-
-  Future<bool> signInAndroid() async {
-    try {
-      final account = await _signInGoogle();
-      if (account != null) {
-        final user = await getUsuario(account.id);
-        if (user != null) {
+        } else if (user == null) {
+          signOut();
+          return false;
+        }else {
           return true;
-        } else {
-          final resultNovoUser = await _novaConta(account);
-          final user = await getUsuario(account.id);
-          if (resultNovoUser == true && user != null) {
-            return true;
-          } else {
-            signOut();
-            return false;
-          }
         }
       } else {
         return false;
@@ -191,9 +169,14 @@ final class FeaturesAuthPresenter {
     }
   }
 
-  Future<bool> apagarConta({required String id, required bool confirmacao,}) async {
+  Future<bool> apagarConta({
+    required String id,
+    required bool confirmacao,
+  }) async {
     if (confirmacao) {
-      return await _apagarConta(id);
+      final result = await _apagarConta(id);
+      await signOut();
+      return result;
     } else {
       return false;
     }
@@ -203,7 +186,7 @@ final class FeaturesAuthPresenter {
     final data = await _discGoogleUsecase(NoParams());
     switch (data) {
       case SuccessReturn<DisconnectGoogleModel>():
-       final result = await _remoUserUsecase(
+        final result = await _remoUserUsecase(
           ParametrosId(
             id: id,
             error: ErrorGeneric(

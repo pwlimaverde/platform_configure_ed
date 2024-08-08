@@ -47,20 +47,6 @@ final class AuthController extends GetxController {
     }
   }
 
-  Future<bool> signInAndroid() async {
-    if (usuario != null && account != null) {
-      return true;
-    }
-    final signInResult = await FeaturesAuthPresenter.to.signInAndroid();
-
-    final userResult = await _setCurrentUser(account?.id ?? "0");
-    if (signInResult && userResult) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   Future<bool> signOut() async {
     final result = await FeaturesAuthPresenter.to.signOut();
     if (result) {

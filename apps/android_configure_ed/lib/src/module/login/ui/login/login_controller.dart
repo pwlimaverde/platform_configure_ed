@@ -8,7 +8,7 @@ class LoginController extends GetxController {
     required VoidCallback onFail,
   }) async {
     try {
-      final result = await AuthController.to.signInAndroid();
+      final result = await AuthController.to.signIn();
 
       if (result) {
         onSuccess();
