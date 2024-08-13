@@ -1,5 +1,6 @@
 import 'package:dependencies/dependencies.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'login_controller.dart';
 
 class LoginPage extends GetView<LoginController> {
@@ -62,21 +63,40 @@ void mostrarDialogoApelido({
   required Function(String nome) onSuccess,
 }) {
   final TextEditingController nomeController = TextEditingController();
+  final formKey = GlobalKey<FormState>(); 
+
   Get.defaultDialog(
     title: "Dispositivo",
     middleText: "Digite um apelido para o Dispositivo!",
-    content: TextField(
-      controller: nomeController,
-      decoration: const InputDecoration(
-        hintText: "Digite o Apelido",
+    content: Form(
+      key: formKey, // Associe a chave ao formulário
+      child: TextFormField(
+        controller: nomeController,
+        decoration: const InputDecoration(
+          hintText: "Digite o Apelido",
+        ),
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9_]')),
+        ],
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Por favor, digite um apelido';
+          }
+          if (value.length < 4) {
+            return 'O apelido deve ter pelo menos 4 caracteres';
+          }
+          return null;
+        },
       ),
     ),
     textConfirm: "Sim",
     textCancel: "Não",
     confirmTextColor: Colors.white,
     onConfirm: () {
-      onSuccess(nomeController.text);
-      Get.back(); // Fecha o diálogo
+      if (formKey.currentState!.validate()) { // Verifique se o formulário é válido
+        onSuccess(nomeController.text);
+        Get.back(); // Fecha o diálogo
+      }
     },
     onCancel: () {
       Get.back(); // Fecha o diálogo
