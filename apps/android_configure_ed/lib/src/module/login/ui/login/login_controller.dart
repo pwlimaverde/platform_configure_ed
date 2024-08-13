@@ -1,15 +1,25 @@
 import 'dart:ui';
 
 import 'package:dependencies/dependencies.dart';
+import 'package:unique_identifier/unique_identifier.dart';
 
 class LoginController extends GetxController {
   Future<void> signInGoogleLogin({
+    required String apelido,
     required VoidCallback onSuccess,
     required VoidCallback onFail,
   }) async {
     try {
-      final result = await AuthController.to.signIn();
 
+
+
+      Logger().f("teste identifier - INICIO");
+      final identifier = await UniqueIdentifier.serial;
+
+      Logger().f("teste identifier - $apelido-$identifier");
+
+
+      final result = await AuthController.to.signIn();
       if (result) {
         onSuccess();
       } else {

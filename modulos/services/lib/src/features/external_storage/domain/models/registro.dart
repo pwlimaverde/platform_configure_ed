@@ -1,3 +1,8 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
+import 'package:collection/collection.dart';
+
 
 class Registro {
   final String colecao;
@@ -23,5 +28,29 @@ class Registro {
       subColecao: subColecao ?? this.subColecao,
       dados: dados ?? this.dados,
     );
+  }
+  @override
+  String toString() {
+    return 'Registro(colecao: $colecao, documento: $documento, subColecao: $subColecao, dados: $dados)';
+  }
+
+  @override
+  bool operator ==(covariant Registro other) {
+    if (identical(this, other)) return true;
+    final mapEquals = const DeepCollectionEquality().equals;
+  
+    return 
+      other.colecao == colecao &&
+      other.documento == documento &&
+      other.subColecao == subColecao &&
+      mapEquals(other.dados, dados);
+  }
+
+  @override
+  int get hashCode {
+    return colecao.hashCode ^
+      documento.hashCode ^
+      subColecao.hashCode ^
+      dados.hashCode;
   }
 }

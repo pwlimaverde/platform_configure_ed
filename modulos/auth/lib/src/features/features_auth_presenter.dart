@@ -8,6 +8,7 @@ import '../utils/typedefs.dart';
 import 'checar_autorizacao_google/domain/model/checar_autorizacao_google_model.dart';
 import 'disconnect_google/domain/model/disconnect_google_model.dart';
 import 'nova_conta/domain/model/nova_conta_model.dart';
+import 'novo_dispositivo/domain/model/novo_dispositivo_model.dart';
 import 'remove_usuario/domain/model/remove_usuario_model.dart';
 import 'sign_out/domain/model/sign_out_model.dart';
 
@@ -22,9 +23,12 @@ final class FeaturesAuthPresenter {
   final GetUserUsecase _getUsuarioUsecase;
   final CAGoogleUsecase _caGoogleUsecase;
   final CkAutGoogleUsecase _ckAutGoogleUsecase;
+  final NDUsecase _novoDispositivoUsecase;
+
 
   FeaturesAuthPresenter._({
     required RemoUserUsecase remoUserUsecase,
+    required NDUsecase novoDispositivoUsecase,
     required DiscGoogleUsecase discGoogleUsecase,
     required CkAutGoogleUsecase ckAutGoogleUsecase,
     required CAGoogleUsecase caGoogleUsecase,
@@ -39,10 +43,12 @@ final class FeaturesAuthPresenter {
         _ckAutGoogleUsecase = ckAutGoogleUsecase,
         _remoUserUsecase = remoUserUsecase,
         _discGoogleUsecase = discGoogleUsecase,
+        _novoDispositivoUsecase = novoDispositivoUsecase,
         _novoUserUsecase = novoUserUsecase;
 
   factory FeaturesAuthPresenter({
     required RemoUserUsecase remoUserUsecase,
+    required NDUsecase novoDispositivoUsecase,
     required DiscGoogleUsecase discGoogleUsecase,
     required CkAutGoogleUsecase ckAutGoogleUsecase,
     required CAGoogleUsecase caGoogleUsecase,
@@ -53,6 +59,7 @@ final class FeaturesAuthPresenter {
   }) {
     _instance ??= FeaturesAuthPresenter._(
         ckAutGoogleUsecase: ckAutGoogleUsecase,
+        novoDispositivoUsecase: novoDispositivoUsecase,
         getUsuarioUsecase: getUsuarioUsecase,
         signinGoogleUsecase: signinGoogleUsecase,
         novoUserUsecase: novoUserUsecase,
@@ -110,6 +117,25 @@ final class FeaturesAuthPresenter {
     }
   }
 
+  Future<bool> _novoDispositivo(String id) async {
+
+    final resultNovoDispositivo = await _novoDispositivoUsecase(
+      ParametrosId(
+        id: id,
+        error: ErrorGeneric(
+          message: "Erro ao Criar Dispositivo",
+        ),
+      ),
+    );
+
+    switch (resultNovoDispositivo) {
+      case SuccessReturn<NovoDispositivoModel>():
+        return true;
+      case ErrorReturn<NovoDispositivoModel>():
+        return false;
+    }
+  }
+
   Future<bool> signIn() async {
     try {
       final account = await _signInGoogle();
@@ -128,6 +154,11 @@ final class FeaturesAuthPresenter {
           signOut();
           return false;
         }else {
+          
+          final resultDispositivo = await _novoDispositivo(account.id);
+          Logger().i("teste resultDispositivo $resultDispositivo");
+
+          
           return true;
         }
       } else {

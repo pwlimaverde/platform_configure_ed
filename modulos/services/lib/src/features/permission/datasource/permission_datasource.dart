@@ -24,11 +24,12 @@ final class PermissionDatasource implements Datasource<PermissionModel> {
           Permission.systemAlertWindow.request();
         }
       });
-      await Permission.camera.isDenied.then((value) {
+      await Permission.phone.status.isDenied.then((value) {
         if (value) {
-          Permission.camera.request();
+          Permission.phone.request();
         }
       });
+
       return PermissionModel();
     } catch (e) {
       throw parameters.error..message = "$e";

@@ -10,12 +10,9 @@ final class SignInWithGoogleDatasource
   @override
   Future<GoogleSignInAccount> call(NoParams parameters) async {
     try {
-      Logger().d("teste usecase web account - inicio");
       final account = await signIn.signIn();
       if (account != null) {
-      Logger().d("teste usecase web account - $account");
         final checkAccessScopes = await signIn.canAccessScopes(scopes);
-      Logger().d("teste usecase web scops - $checkAccessScopes");
         if (checkAccessScopes) {
           return account;
         } else {
@@ -23,7 +20,8 @@ final class SignInWithGoogleDatasource
           if (requestAccess) {
             return account;
           } else {
-            throw Exception("Erro ao fazer o login com google. Acesso ao Driver Negado.");
+            throw Exception(
+                "Erro ao fazer o login com google. Acesso ao Driver Negado.");
           }
         }
       } else {

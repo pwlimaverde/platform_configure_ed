@@ -11,7 +11,7 @@ dependencies:
   #Dependencias internas
   dependencies:
     path: ../../modulos/dependencies
-  
+  unique_identifier: ^0.3.0
     
 dev_dependencies:
   flutter_test:

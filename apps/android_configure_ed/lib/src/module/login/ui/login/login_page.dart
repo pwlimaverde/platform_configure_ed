@@ -2,8 +2,6 @@ import 'package:dependencies/dependencies.dart';
 import 'package:flutter/material.dart';
 import 'login_controller.dart';
 
-
-
 class LoginPage extends GetView<LoginController> {
   const LoginPage({super.key});
 
@@ -12,6 +10,7 @@ class LoginPage extends GetView<LoginController> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
             child: SizedBox(
@@ -19,14 +18,18 @@ class LoginPage extends GetView<LoginController> {
               height: 80,
               child: IconButton(
                   onPressed: () {
-                    controller.signInGoogleLogin(
-                      onSuccess: () {
-                        Get.snackbar("Sucesso", "Sucesso ao fazer login");
-                      },
-                      onFail: () {
-                        Get.snackbar("Erro", "Erro ao fazer login");
-                      },
-                    );
+                    mostrarDialogoApelido(onSuccess: (String apelido) {
+                      controller.signInGoogleLogin(
+                        apelido: apelido,
+                        onSuccess: () {
+                          Get.snackbar("Sucesso", "Sucesso ao fazer login");
+                          // Get.toNamed("/login");
+                        },
+                        onFail: () {
+                          Get.snackbar("Erro", "Erro ao fazer login");
+                        },
+                      );
+                    });
                   },
                   icon: const FaIcon(FontAwesomeIcons.google)),
             ),
@@ -49,45 +52,32 @@ class LoginPage extends GetView<LoginController> {
                   icon: const FaIcon(FontAwesomeIcons.arrowRightFromBracket)),
             ),
           ),
-          Center(
-            child: SizedBox(
-              width: 80,
-              height: 80,
-              child: IconButton(
-                  onPressed: () {
-                    mostrarDialogoConfirmacao(onSuccess: () {
-                      controller.apagarConta(
-                        confirmacao: true,
-                        onSuccess: () {
-                          Get.snackbar("Sucesso", "Sucesso ao apagar a conta");
-                          Get.toNamed("/login");
-                        },
-                        onFail: () {
-                          Get.snackbar("Erro", "Erro ao apagar a conta");
-                        },
-                      );
-                      Get.back();
-                    });
-                  },
-                  icon: const FaIcon(FontAwesomeIcons.userXmark)),
-            ),
-          ),
         ],
       ),
     );
   }
 }
 
-void mostrarDialogoConfirmacao({
-  required VoidCallback onSuccess,
+void mostrarDialogoApelido({
+  required Function(String nome) onSuccess,
 }) {
+  final TextEditingController nomeController = TextEditingController();
   Get.defaultDialog(
-    title: "Confirmação",
-    middleText: "Tem certeza que deseja apagar sua conta?",
+    title: "Dispositivo",
+    middleText: "Digite um apelido para o Dispositivo!",
+    content: TextField(
+      controller: nomeController,
+      decoration: const InputDecoration(
+        hintText: "Digite o Apelido",
+      ),
+    ),
     textConfirm: "Sim",
     textCancel: "Não",
     confirmTextColor: Colors.white,
-    onConfirm: onSuccess,
+    onConfirm: () {
+      onSuccess(nomeController.text);
+      Get.back(); // Fecha o diálogo
+    },
     onCancel: () {
       Get.back(); // Fecha o diálogo
     },

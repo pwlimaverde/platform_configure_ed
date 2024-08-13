@@ -11,6 +11,8 @@ import 'features/get_usuario/datasources/get_usuario_datasource.dart';
 import 'features/get_usuario/domain/usecase/get_usuario_usecase.dart';
 import 'features/nova_conta/datasources/nova_conta_datasource.dart';
 import 'features/nova_conta/domain/usecase/nova_conta_usecase.dart';
+import 'features/novo_dispositivo/datasources/novo_dispositivo_datasource.dart';
+import 'features/novo_dispositivo/domain/usecase/novo_dispositivo_usecase.dart';
 import 'features/remove_usuario/datasources/remove_usuario_datasource.dart';
 import 'features/remove_usuario/domain/usecase/remove_usuario_usecase.dart';
 import 'features/sign_in_with_google/datasources/sign_in_with_google_datasource.dart';
@@ -58,6 +60,9 @@ class AuthBinding implements Bindings {
     Get.lazyPut<Uuid>(
       () => const Uuid(),
     );
+    Get.lazyPut<DeviceInfoPlugin>(
+      () => DeviceInfoPlugin(),
+    );
     Get.lazyPut<NovoUserData>(
       () => NovaContaDatasource(
         uuid: Get.find(),
@@ -67,6 +72,20 @@ class AuthBinding implements Bindings {
     );
     Get.lazyPut<NovoUserUsecase>(
       () => NovaContaUsecase(
+        Get.find(),
+      ),
+    );
+
+    Get.lazyPut<NDData>(
+      () => NovoDispositivoDatasource(
+        uuid: Get.find(),
+        deviceInfo: Get.find(),
+        externalStorage: Get.find(),
+      ),
+    );
+
+    Get.lazyPut<NDUsecase>(
+      () => NovoDispositivoUsecase(
         Get.find(),
       ),
     );
@@ -127,6 +146,7 @@ class AuthBinding implements Bindings {
     Get.put<FeaturesAuthPresenter>(
       FeaturesAuthPresenter(
         remoUserUsecase: Get.find(),
+        novoDispositivoUsecase: Get.find(),
         discGoogleUsecase: Get.find(),
         ckAutGoogleUsecase: Get.find(),
         caGoogleUsecase: Get.find(),

@@ -3,6 +3,7 @@ import 'package:dependencies/dependencies.dart';
 import '../features/checar_autorizacao_google/domain/model/checar_autorizacao_google_model.dart';
 import '../features/disconnect_google/domain/model/disconnect_google_model.dart';
 import '../features/nova_conta/domain/model/nova_conta_model.dart';
+import '../features/novo_dispositivo/domain/model/novo_dispositivo_model.dart';
 import '../features/remove_usuario/domain/model/remove_usuario_model.dart';
 import '../features/sign_out/domain/model/sign_out_model.dart';
 
@@ -11,6 +12,10 @@ typedef SOutData = Datasource<SignOutModel>;
 
 typedef NovoUserUsecase = UsecaseBaseCallData<NovaContaModel, NovaContaModel>;
 typedef NovoUserData = Datasource<NovaContaModel>;
+
+typedef NDUsecase
+    = UsecaseBaseCallData<NovoDispositivoModel, NovoDispositivoModel>;
+typedef NDData = Datasource<NovoDispositivoModel>;
 
 typedef SigninGoogleUsecase
     = UsecaseBaseCallData<GoogleSignInAccount, GoogleSignInAccount>;
