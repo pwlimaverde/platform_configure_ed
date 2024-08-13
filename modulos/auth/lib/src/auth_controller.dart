@@ -33,11 +33,11 @@ final class AuthController extends GetxController {
     _setCurrentAccount();
   }
 
-  Future<bool> signIn() async {
+  Future<bool> signIn([String? identificacao]) async {
     if (usuario != null && account != null) {
       return true;
     }
-    final signInResult = await FeaturesAuthPresenter.to.signIn();
+    final signInResult = await FeaturesAuthPresenter.to.signIn(identificacao);
     final userResult = await _setCurrentUser(account?.id ?? "0");
     if (signInResult && userResult) {
       return true;

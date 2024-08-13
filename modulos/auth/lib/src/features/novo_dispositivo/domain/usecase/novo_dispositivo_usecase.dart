@@ -7,7 +7,7 @@ final class NovoDispositivoUsecase extends UsecaseBaseCallData<NovoDispositivoMo
   NovoDispositivoUsecase(super.datasource);
 
   @override
-  Future<ReturnSuccessOrError<NovoDispositivoModel>> call(ParametrosId parameters) async {
+  Future<ReturnSuccessOrError<NovoDispositivoModel>> call(ParametrosNovoDispositivo parameters) async {
     final resultDatacource = await resultDatasource(
       parameters: parameters,
       datasource: datasource,

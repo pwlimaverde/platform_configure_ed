@@ -16,7 +16,7 @@ final class NovoDispositivoDatasource
   });
 
   @override
-  Future<NovoDispositivoModel> call(ParametrosId parameters) async {
+  Future<NovoDispositivoModel> call(ParametrosNovoDispositivo parameters) async {
     try {
       Logger().d("teste dispositivo account - inicio");
       final userRegistro = Registro(
@@ -26,10 +26,8 @@ final class NovoDispositivoDatasource
 
       final androidInfo = await deviceInfo.androidInfo;
 
-      Logger().i("teste androidInfo - $androidInfo");
-
       final dispositivo = Dispositivo(
-        id: androidInfo.serialNumber,
+        id: parameters.identificacao,
         nome: "${androidInfo.model} - ${androidInfo.brand}}",
         product: androidInfo.product,
         model: androidInfo.model,

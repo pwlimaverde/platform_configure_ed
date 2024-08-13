@@ -25,7 +25,6 @@ final class FeaturesAuthPresenter {
   final CkAutGoogleUsecase _ckAutGoogleUsecase;
   final NDUsecase _novoDispositivoUsecase;
 
-
   FeaturesAuthPresenter._({
     required RemoUserUsecase remoUserUsecase,
     required NDUsecase novoDispositivoUsecase,
@@ -117,11 +116,14 @@ final class FeaturesAuthPresenter {
     }
   }
 
-  Future<bool> _novoDispositivo(String id) async {
-
+  Future<bool> _novoDispositivo({
+    required String id,
+    required String identificacao,
+  }) async {
     final resultNovoDispositivo = await _novoDispositivoUsecase(
-      ParametrosId(
+      ParametrosNovoDispositivo(
         id: id,
+        identificacao: identificacao,
         error: ErrorGeneric(
           message: "Erro ao Criar Dispositivo",
         ),
@@ -136,7 +138,7 @@ final class FeaturesAuthPresenter {
     }
   }
 
-  Future<bool> signIn() async {
+  Future<bool> signIn([String? identificacao]) async {
     try {
       final account = await _signInGoogle();
       if (account != null) {
@@ -153,12 +155,13 @@ final class FeaturesAuthPresenter {
         } else if (user == null) {
           signOut();
           return false;
-        }else {
-          
-          final resultDispositivo = await _novoDispositivo(account.id);
+        } else {
+          final resultDispositivo = await _novoDispositivo(
+            id: account.id,
+            identificacao: identificacao ?? "unknown",
+          );
           Logger().i("teste resultDispositivo $resultDispositivo");
 
-          
           return true;
         }
       } else {

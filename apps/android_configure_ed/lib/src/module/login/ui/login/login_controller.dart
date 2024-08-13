@@ -4,22 +4,19 @@ import 'package:dependencies/dependencies.dart';
 import 'package:unique_identifier/unique_identifier.dart';
 
 class LoginController extends GetxController {
+
+  
   Future<void> signInGoogleLogin({
     required String apelido,
     required VoidCallback onSuccess,
     required VoidCallback onFail,
   }) async {
     try {
-
-
-
-      Logger().f("teste identifier - INICIO");
       final identifier = await UniqueIdentifier.serial;
 
-      Logger().f("teste identifier - $apelido-$identifier");
+      await FeaturesServicePresenter.to.localStorage.write(key: "identificacao", data: "$apelido-$identifier");
 
-
-      final result = await AuthController.to.signIn();
+      final result = await AuthController.to.signIn("$apelido-$identifier");
       if (result) {
         onSuccess();
       } else {
