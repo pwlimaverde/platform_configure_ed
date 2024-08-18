@@ -37,7 +37,7 @@ final class FeaturesLoginPresenter {
       case SuccessReturn<GetIdentificacaoModel>():
         return data.result.identificacao;
       case ErrorReturn<GetIdentificacaoModel>():
-        return data.result.message;
+        return "";
     }
   }
 
