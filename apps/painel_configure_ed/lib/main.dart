@@ -13,6 +13,7 @@ void main() async {
     permissionInit: false,
     checkConnectInit: false,
     dartPluginInit: false,
+    gerarIdInit: false,
   );
   runApp(
     const AppWidget(),

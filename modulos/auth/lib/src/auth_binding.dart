@@ -28,11 +28,13 @@ class AuthBinding implements Bindings {
       AuthController(),
       permanent: true,
     );
+    Get.put<GoogleSignIn>(
+      FeaturesServicePresenter.to.signIn,
+    );
     Get.put<ExternalStorage>(
       FeaturesServicePresenter.to.externalStorage,
       permanent: true,
     );
-
     Get.lazyPut<GetUserData>(
       () => GetUsuarioDatasource(
         externalStorage: Get.find(),
@@ -54,18 +56,12 @@ class AuthBinding implements Bindings {
         Get.find(),
       ),
     );
-    Get.put<GoogleSignIn>(
-      FeaturesServicePresenter.to.signIn,
-    );
-    Get.lazyPut<Uuid>(
-      () => const Uuid(),
-    );
+    
     Get.lazyPut<DeviceInfoPlugin>(
       () => DeviceInfoPlugin(),
     );
     Get.lazyPut<NovoUserData>(
       () => NovaContaDatasource(
-        uuid: Get.find(),
         scopes: scopes,
         externalStorage: Get.find(),
       ),
@@ -78,7 +74,6 @@ class AuthBinding implements Bindings {
 
     Get.lazyPut<NDData>(
       () => NovoDispositivoDatasource(
-        uuid: Get.find(),
         deviceInfo: Get.find(),
         externalStorage: Get.find(),
       ),

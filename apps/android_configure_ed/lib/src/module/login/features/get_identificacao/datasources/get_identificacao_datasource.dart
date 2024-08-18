@@ -13,14 +13,14 @@ final class GetIdentificacaoDatasource
   @override
   Future<GetIdentificacaoModel> call(NoParams parameters) async {
     try {
-      final identificacao = await FeaturesServicePresenter.to.localStorage
+      final identificacao = await localStorage
           .read<String>("identificacao");
       return GetIdentificacaoModel(
         identificacao: identificacao,
       );
     } catch (e) {
-      await FeaturesServicePresenter.to.localStorage
-          .write(key: "identificacao", data: "");
+      await localStorage
+          .write(key: "identificacao", data: "indefinite");
       throw Exception("Erro ao carregar a identificação do dispositivo.");
     }
   }

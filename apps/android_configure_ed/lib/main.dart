@@ -14,6 +14,7 @@ void main() async {
     permissionInit: true,
     checkConnectInit: true,
     dartPluginInit: true,
+    gerarIdInit: true
   );
 
   runApp(const AppWidget());

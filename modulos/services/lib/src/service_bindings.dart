@@ -8,6 +8,8 @@ import 'features/external_storage/datasource/firebase/firebase_storage_datasourc
 import 'features/external_storage/domain/usecase/external_storage_usecase.dart';
 import 'features/firebase_init/datasource/firebase_init_datasource.dart';
 import 'features/firebase_init/domain/usecase/firebase_init_usecase.dart';
+import 'features/gerar_id/datasource/uuid_gerar_id_datasource.dart';
+import 'features/gerar_id/domain/usecase/gerar_id_usecase.dart';
 import 'features/google_sign_in/domain/usecase/google_sign_in_usecase.dart';
 import 'features/local_storage/datasource/hive_storage_datasource.dart';
 import 'features/local_storage/domain/usecase/local_storage_usecase.dart';
@@ -73,6 +75,16 @@ final class ServiceBindings implements Bindings {
         Get.find(),
       ),
     );
+
+    Get.lazyPut<GIData>(
+      () => UuidGerarIdDatasource(),
+    );
+    Get.lazyPut<GIService>(
+      () => GerarIdUsecase(
+        Get.find(),
+      ),
+    );
+
     Get.lazyPut<EsServiceData>(
       () => FirebaseStorageDatasource(),
     );
@@ -94,6 +106,7 @@ final class ServiceBindings implements Bindings {
     Get.put<FeaturesServicePresenter>(
       FeaturesServicePresenter(
         esService: Get.find(),
+        giService: Get.find(),
         fbService: Get.find(),
         permissionService: Get.find(),
         lsService: Get.find(),

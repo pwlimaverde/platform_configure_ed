@@ -17,11 +17,12 @@ class LoginController extends GetxController {
     identificacao(
       await FeaturesLoginPresenter.to.getIdentificacao(),
     );
+    Logger().f("Identificação $identificacao");
+    Logger().f("Identificação ${identificacao.split("-")[0]}");
   }
 
-  Future<void> setIdentificacao(String? apelido) async {
-    await FeaturesServicePresenter.to.localStorage
-        .write(key: "identificacao", data: "$apelido-uuid");
+  Future<void> setIdentificacao(String apelido) async {
+    await FeaturesLoginPresenter.to.setIdentificacao(apelido);
     await _getIdentificacao();
   }
 

@@ -5,12 +5,10 @@ import '../domain/model/novo_dispositivo_model.dart';
 
 final class NovoDispositivoDatasource
     implements Datasource<NovoDispositivoModel> {
-  final Uuid uuid;
   final DeviceInfoPlugin deviceInfo;
   final ExternalStorage externalStorage;
 
   NovoDispositivoDatasource({
-    required this.uuid,
     required this.deviceInfo,
     required this.externalStorage,
   });

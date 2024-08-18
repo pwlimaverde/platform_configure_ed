@@ -25,6 +25,9 @@ class Dispositivo {
     };
   }
 
+  String get apelido => id.split("-")[0];
+
+
   factory Dispositivo.fromMap(Map<String, dynamic> map) {
     return Dispositivo(
       id: (map['id'] ?? '') as String,

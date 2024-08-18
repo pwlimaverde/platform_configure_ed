@@ -1,6 +1,5 @@
 import 'package:dependencies/dependencies.dart';
 import 'dart:async';
-import '../domain/interface/local_storage.dart';
 
 ///Datasources
 final class HiveStorageDatasource implements Datasource<LocalStorage> {

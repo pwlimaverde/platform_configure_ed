@@ -4,13 +4,17 @@ import 'package:flutter/material.dart';
 import '../features/check_connect/domain/model/check_connect_model.dart';
 import '../features/dart_plugin_registrant/domain/model/dart_plugin_registrant_model.dart';
 import '../features/firebase_init/domain/model/dart_plugin_registrant_model.dart';
-import '../features/local_storage/domain/interface/local_storage.dart';
+import '../features/gerar_id/domain/interface/gerar_id.dart';
 import '../features/permission/domain/model/permission_model.dart';
 
 typedef SignInService = UsecaseBase<GoogleSignIn>;
 
 typedef EsService = UsecaseBaseCallData<ExternalStorage, ExternalStorage>;
 typedef EsServiceData = Datasource<ExternalStorage>;
+
+typedef GIService = UsecaseBaseCallData<GerarId, GerarId>;
+typedef GIData = Datasource<GerarId>;
+
 
 typedef FbService = UsecaseBaseCallData<Unit, FirebaseInitModel>;
 typedef FbServiceData = Datasource<FirebaseInitModel>;

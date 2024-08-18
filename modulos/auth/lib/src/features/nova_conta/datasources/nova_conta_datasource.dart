@@ -4,12 +4,10 @@ import '../../../utils/parameters.dart';
 import '../domain/model/nova_conta_model.dart';
 
 final class NovaContaDatasource implements Datasource<NovaContaModel> {
-  final Uuid uuid;
   final List<String> scopes;
   final ExternalStorage externalStorage;
 
   NovaContaDatasource({
-    required this.uuid,
     required this.scopes,
     required this.externalStorage,
   });

@@ -6,6 +6,7 @@ Future<void> startServices({
   required bool dartPluginInit,
   required bool permissionInit,
   required bool checkConnectInit,
+  required bool gerarIdInit,
 }) async {
   await Service.to
       .initDependences(() async => ServiceBindings().dependencies());
@@ -17,6 +18,9 @@ Future<void> startServices({
     FeaturesServicePresenter.to.googleSignInService(),
   ];
 
+  if (gerarIdInit) {
+    sevisesInit.add(FeaturesServicePresenter.to.gerarIdService());
+  }
   if (dartPluginInit) {
     sevisesInit.add(FeaturesServicePresenter.to.dartPluginRegistrantService());
   }

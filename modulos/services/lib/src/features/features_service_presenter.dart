@@ -3,7 +3,7 @@ import 'package:dependencies/dependencies.dart';
 import '../utils/parameters.dart';
 import '../utils/typedefs.dart';
 import 'check_connect/domain/model/check_connect_model.dart';
-import 'local_storage/domain/interface/local_storage.dart';
+import 'gerar_id/domain/interface/gerar_id.dart';
 
 final class FeaturesServicePresenter {
   static FeaturesServicePresenter? _instance;
@@ -11,6 +11,7 @@ final class FeaturesServicePresenter {
   late LocalStorage localStorage;
   late ExternalStorage externalStorage;
   late GoogleSignIn signIn;
+  late GerarId gerarId;
 
   final PermissionService _permissionService;
   final FbService _fbService;
@@ -20,8 +21,11 @@ final class FeaturesServicePresenter {
   final WidService _widService;
   final ConnectService _connectService;
   final SignInService _signInService;
+  final GIService _giService;
+
 
   FeaturesServicePresenter._({
+    required GIService giService,
     required FbService fbService,
     required EsService esService,
     required PermissionService permissionService,
@@ -37,10 +41,12 @@ final class FeaturesServicePresenter {
         _permissionService = permissionService,
         _esService = esService,
         _fbService = fbService,
+        _giService = giService,
         _lsService = lsService;
 
   factory FeaturesServicePresenter({
     required EsService esService,
+    required GIService giService,
     required FbService fbService,
     required PermissionService permissionService,
     required LsService lsService,
@@ -58,6 +64,7 @@ final class FeaturesServicePresenter {
       widService: widService,
       connectService: connectService,
       signInService: signInService,
+      giService: giService,
     );
     return _instance!;
   }
@@ -111,6 +118,17 @@ final class FeaturesServicePresenter {
         localStorage = data.result;
         return unit;
       case ErrorReturn<LocalStorage>():
+        throw data.result.message;
+    }
+  }
+
+  Future<Unit> gerarIdService() async {
+    final data = await _giService(NoParams());
+    switch (data) {
+      case SuccessReturn<GerarId>():
+        gerarId = data.result;
+        return unit;
+      case ErrorReturn<GerarId>():
         throw data.result.message;
     }
   }
