@@ -59,6 +59,6 @@ class HiveStorageLocal implements LocalStorage {
   Future<Box<dynamic>> _hiveInit() async {
     final dir = await getApplicationDocumentsDirectory();
     Hive.defaultDirectory = dir.path;
-    return Hive.box(name: "bdSistem_hive");
+    return Hive.box<String>(name: "bdSistem_hive");
   }
 }

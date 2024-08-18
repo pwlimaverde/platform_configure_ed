@@ -18,10 +18,9 @@ class LoginPage extends GetView<LoginController> {
               width: 80,
               height: 80,
               child: IconButton(
-                  onPressed: () {
-                    mostrarDialogoApelido(onSuccess: (String apelido) {
-                      controller.signInGoogleLogin(
-                        apelido: apelido,
+                  onPressed: () async {
+                    if (controller.identificacao.value.isNotEmpty) {
+                      await controller.signInGoogleLogin(
                         onSuccess: () {
                           Get.snackbar("Sucesso", "Sucesso ao fazer login");
                           // Get.toNamed("/login");
@@ -30,7 +29,20 @@ class LoginPage extends GetView<LoginController> {
                           Get.snackbar("Erro", "Erro ao fazer login");
                         },
                       );
-                    });
+                    } else {
+                      _mostrarDialogoApelido(onSuccess: (String apelido) async {
+                        await controller.setIdentificacao(apelido);
+                        await controller.signInGoogleLogin(
+                          onSuccess: () {
+                            Get.snackbar("Sucesso", "Sucesso ao fazer login");
+                            // Get.toNamed("/login");
+                          },
+                          onFail: () {
+                            Get.snackbar("Erro", "Erro ao fazer login");
+                          },
+                        );
+                      });
+                    }
                   },
                   icon: const FaIcon(FontAwesomeIcons.google)),
             ),
@@ -59,11 +71,11 @@ class LoginPage extends GetView<LoginController> {
   }
 }
 
-void mostrarDialogoApelido({
+void _mostrarDialogoApelido({
   required Function(String nome) onSuccess,
 }) {
   final TextEditingController nomeController = TextEditingController();
-  final formKey = GlobalKey<FormState>(); 
+  final formKey = GlobalKey<FormState>();
 
   Get.defaultDialog(
     title: "Dispositivo",
@@ -93,7 +105,8 @@ void mostrarDialogoApelido({
     textCancel: "Não",
     confirmTextColor: Colors.white,
     onConfirm: () {
-      if (formKey.currentState!.validate()) { // Verifique se o formulário é válido
+      if (formKey.currentState!.validate()) {
+        // Verifique se o formulário é válido
         onSuccess(nomeController.text);
         Get.back(); // Fecha o diálogo
       }

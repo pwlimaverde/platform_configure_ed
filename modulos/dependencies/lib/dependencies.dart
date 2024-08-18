@@ -10,6 +10,7 @@ export 'package:firebase_auth/firebase_auth.dart';
 export 'package:android_power_manager/android_power_manager.dart';
 export 'package:permission_handler/permission_handler.dart';
 export 'package:hive/hive.dart';
+
 export 'package:path_provider/path_provider.dart';
 export 'package:connectivity_plus/connectivity_plus.dart';
 export 'package:get/get.dart';
