@@ -156,11 +156,12 @@ final class FeaturesAuthPresenter {
           signOut();
           return false;
         } else {
-          final resultDispositivo = await _novoDispositivo(
+
+
+          await _novoDispositivo(
             id: account.id,
             identificacao: identificacao ?? "unknown",
           );
-          Logger().i("teste resultDispositivo $resultDispositivo");
 
           return true;
         }
