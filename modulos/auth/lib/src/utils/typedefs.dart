@@ -2,6 +2,7 @@ import 'package:dependencies/dependencies.dart';
 
 import '../features/checar_autorizacao_google/domain/model/checar_autorizacao_google_model.dart';
 import '../features/disconnect_google/domain/model/disconnect_google_model.dart';
+import '../features/get_dispositivo/domain/model/get_dispositivo_model.dart';
 import '../features/nova_conta/domain/model/nova_conta_model.dart';
 import '../features/novo_dispositivo/domain/model/novo_dispositivo_model.dart';
 import '../features/remove_usuario/domain/model/remove_usuario_model.dart';
@@ -23,6 +24,9 @@ typedef SigninGoogleData = Datasource<GoogleSignInAccount>;
 
 typedef GetUserUsecase = UsecaseBaseCallData<Usuario, Map<String, dynamic>>;
 typedef GetUserData = Datasource<Map<String, dynamic>>;
+
+typedef GDUse = UsecaseBaseCallData<Dispositivo, GetDispositivoModel>;
+typedef GDData = Datasource<GetDispositivoModel>;
 
 typedef CAGoogleUsecase = UsecaseBaseCallData<StCAGoogleData, StCAGoogleData>;
 typedef CAGoogleData = Datasource<StCAGoogleData>;

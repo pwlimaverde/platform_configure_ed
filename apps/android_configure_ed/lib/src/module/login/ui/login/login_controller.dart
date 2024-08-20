@@ -17,8 +17,6 @@ class LoginController extends GetxController {
     identificacao(
       await FeaturesLoginPresenter.to.getIdentificacao(),
     );
-    Logger().f("Identificação $identificacao");
-    Logger().f("Identificação ${identificacao.split("-")[0]}");
   }
 
   Future<void> setIdentificacao(String apelido) async {

@@ -24,8 +24,10 @@ final class FeaturesAuthPresenter {
   final CAGoogleUsecase _caGoogleUsecase;
   final CkAutGoogleUsecase _ckAutGoogleUsecase;
   final NDUsecase _novoDispositivoUsecase;
+  final GDUse _getDispositivoUsecase;
 
   FeaturesAuthPresenter._({
+    required GDUse getDispositivoUsecase,
     required RemoUserUsecase remoUserUsecase,
     required NDUsecase novoDispositivoUsecase,
     required DiscGoogleUsecase discGoogleUsecase,
@@ -36,6 +38,7 @@ final class FeaturesAuthPresenter {
     required SOutUsecase signOutUsecase,
     required GetUserUsecase getUsuarioUsecase,
   })  : _signinGoogleUsecase = signinGoogleUsecase,
+        _getDispositivoUsecase = getDispositivoUsecase,
         _signOutUsecase = signOutUsecase,
         _getUsuarioUsecase = getUsuarioUsecase,
         _caGoogleUsecase = caGoogleUsecase,
@@ -47,6 +50,7 @@ final class FeaturesAuthPresenter {
 
   factory FeaturesAuthPresenter({
     required RemoUserUsecase remoUserUsecase,
+    required GDUse getDispositivoUsecase,
     required NDUsecase novoDispositivoUsecase,
     required DiscGoogleUsecase discGoogleUsecase,
     required CkAutGoogleUsecase ckAutGoogleUsecase,
@@ -58,6 +62,7 @@ final class FeaturesAuthPresenter {
   }) {
     _instance ??= FeaturesAuthPresenter._(
         ckAutGoogleUsecase: ckAutGoogleUsecase,
+        getDispositivoUsecase: getDispositivoUsecase,
         novoDispositivoUsecase: novoDispositivoUsecase,
         getUsuarioUsecase: getUsuarioUsecase,
         signinGoogleUsecase: signinGoogleUsecase,
@@ -116,6 +121,28 @@ final class FeaturesAuthPresenter {
     }
   }
 
+  Future<Dispositivo?> _getDispositivo({
+    required String idUser,
+    required String idDispositivo,
+  }) async {
+    final resultGetUser = await _getDispositivoUsecase(
+      ParametrosDispositivoId(
+        idUser: idUser,
+        idDispositivo: idDispositivo,
+        error: ErrorGeneric(
+          message: "Erro ao carregar informações do dispositivo",
+        ),
+      ),
+    );
+
+    switch (resultGetUser) {
+      case SuccessReturn<Dispositivo>():
+        return resultGetUser.result;
+      case ErrorReturn<Dispositivo>():
+        return null;
+    }
+  }
+
   Future<bool> _novoDispositivo({
     required String id,
     required String identificacao,
@@ -156,14 +183,19 @@ final class FeaturesAuthPresenter {
           signOut();
           return false;
         } else {
-
-
-          await _novoDispositivo(
-            id: account.id,
-            identificacao: identificacao ?? "unknown",
+          final dispositivo = await _getDispositivo(
+            idUser: user.id,
+            idDispositivo: identificacao ?? "unknown",
           );
-
-          return true;
+          if (dispositivo == null) {
+            await _novoDispositivo(
+              id: account.id,
+              identificacao: identificacao ?? "unknown",
+            );
+            return true;
+          } else {
+            return true;
+          }
         }
       } else {
         return false;

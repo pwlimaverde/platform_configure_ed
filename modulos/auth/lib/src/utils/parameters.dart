@@ -11,6 +11,19 @@ final class ParametrosId implements ParametersReturnResult {
   });
 }
 
+final class ParametrosDispositivoId implements ParametersReturnResult {
+  final String idUser;
+  final String idDispositivo;
+  @override
+  final AppError error;
+
+  ParametrosDispositivoId({
+    required this.idUser,
+    required this.idDispositivo,
+    required this.error,
+  });
+}
+
 final class ParametrosNovoDispositivo implements ParametersReturnResult {
   final String id;
   final String identificacao;

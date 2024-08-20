@@ -16,7 +16,6 @@ final class NovoDispositivoDatasource
   @override
   Future<NovoDispositivoModel> call(ParametrosNovoDispositivo parameters) async {
     try {
-      Logger().d("teste dispositivo account - inicio");
       final userRegistro = Registro(
         colecao: "user",
         documento: parameters.id,
@@ -71,14 +70,6 @@ final class NovoDispositivoDatasource
       );
 
       await externalStorage.write(comandosMicRegistro);
-
-      final docRef = await externalStorage.readDocument(Registro(
-        colecao: "user",
-        documento: parameters.id,
-      ));
-
-      Logger().f(docRef);
-      Logger().f(dispositivo);
 
       return NovoDispositivoModel();
     } catch (e) {

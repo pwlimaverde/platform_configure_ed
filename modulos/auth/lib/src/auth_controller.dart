@@ -82,7 +82,6 @@ final class AuthController extends GetxController {
     final user = await FeaturesAuthPresenter.to.getUsuario(id);
     if (user != null) {
       final access = await FeaturesAuthPresenter.to.checarAutorizacaoGoogle();
-    Logger().d("access controller - $access");
       if (access) {
         _usuario(user);
         return true;

@@ -7,6 +7,8 @@ import 'features/current_account_google/domain/usecase/current_account_google_us
 import 'features/disconnect_google/datasources/disconnect_google_datasource.dart';
 import 'features/disconnect_google/domain/usecase/disconnect_google_usecase.dart';
 import 'features/features_auth_presenter.dart';
+import 'features/get_dispositivo/datasources/get_dispositivo_datasource.dart';
+import 'features/get_dispositivo/domain/usecase/get_dispositivo_usecase.dart';
 import 'features/get_usuario/datasources/get_usuario_datasource.dart';
 import 'features/get_usuario/domain/usecase/get_usuario_usecase.dart';
 import 'features/nova_conta/datasources/nova_conta_datasource.dart';
@@ -34,6 +36,16 @@ class AuthBinding implements Bindings {
     Get.put<ExternalStorage>(
       FeaturesServicePresenter.to.externalStorage,
       permanent: true,
+    );
+    Get.lazyPut<GDData>(
+      () => GetDispositivoDatasource(
+        externalStorage: Get.find(),
+      ),
+    );
+    Get.lazyPut<GDUse>(
+      () => GetDispositivoUsecase(
+        Get.find(),
+      ),
     );
     Get.lazyPut<GetUserData>(
       () => GetUsuarioDatasource(
@@ -146,6 +158,7 @@ class AuthBinding implements Bindings {
         ckAutGoogleUsecase: Get.find(),
         caGoogleUsecase: Get.find(),
         getUsuarioUsecase: Get.find(),
+        getDispositivoUsecase: Get.find(),
         signinGoogleUsecase: Get.find(),
         signOutUsecase: Get.find(),
         novoUserUsecase: Get.find(),
