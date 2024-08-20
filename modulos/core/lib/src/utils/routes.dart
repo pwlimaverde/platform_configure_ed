@@ -1,5 +1,6 @@
 enum Routes {
   initial(caminho: "/"),
+  login(caminho: "/login"),
   home(caminho: "/home");
 
   final String caminho;

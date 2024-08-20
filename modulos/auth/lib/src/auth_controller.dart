@@ -14,11 +14,14 @@ final class AuthController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
     _account.listen((account) async {
       if (account != null) {
         final result = await _setCurrentUser(account.id);
         if (!result) {
           signIn();
+        }else{
+          Get.offAllNamed(Routes.home.caminho);
         }
       } else {
         _account.value = null;
@@ -28,9 +31,13 @@ final class AuthController extends GetxController {
   }
 
   @override
-  void onReady() {
+  void onReady() async{
     super.onReady();
-    _setCurrentAccount();
+    await _setCurrentAccount();
+    await Future.delayed(Duration(seconds: 2));
+    if (_account.value == null) {
+      Get.offAllNamed(Routes.login.caminho);
+    }
   }
 
   Future<bool> signIn([String? identificacao]) async {
@@ -76,6 +83,7 @@ final class AuthController extends GetxController {
   Future<void> _setCurrentAccount() async {
     final stream = await FeaturesAuthPresenter.to.currentAccountGoogle();
     _account.bindStream(stream);
+    
   }
 
   Future<bool> _setCurrentUser(String id) async {

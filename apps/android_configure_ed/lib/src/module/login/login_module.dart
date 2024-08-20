@@ -7,7 +7,7 @@ final class LoginModule implements Module {
   @override
   List<GetPage> routes = [
     GetPage(
-      name: Routes.initial.caminho,
+      name: Routes.login.caminho,
       page: () => const LoginPage(),
       binding: LoginBinding(),
     )

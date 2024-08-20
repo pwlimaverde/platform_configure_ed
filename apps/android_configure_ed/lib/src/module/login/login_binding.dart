@@ -20,8 +20,8 @@ class LoginBinding implements Bindings {
       permanent: true,
     );
 
-    Get.lazyPut<LoginController>(
-      () => LoginController(),
+    Get.put<LoginController>(
+      LoginController(),
     );
 
     Get.lazyPut<SIData>(

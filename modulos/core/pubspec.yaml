@@ -1,14 +1,15 @@
 name: core
 description: "Modulo central da aplicação"
 version: 0.1.0
+publish_to: 'none'
 environment:
   sdk: '>=3.5.0 <4.0.0'
   flutter: ">=3.24.0"
 dependencies:
   flutter:
     sdk: flutter
-  return_success_or_error: ^0.18.0
-  get: ^4.6.6
+  dependencies:
+    path: ../dependencies
 dev_dependencies:
   flutter_test:
     sdk: flutter

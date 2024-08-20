@@ -47,24 +47,6 @@ class LoginPage extends GetView<LoginController> {
                   icon: const FaIcon(FontAwesomeIcons.google)),
             ),
           ),
-          Center(
-            child: SizedBox(
-              width: 80,
-              height: 80,
-              child: IconButton(
-                  onPressed: () {
-                    controller.logOut(
-                      onSuccess: () {
-                        Get.snackbar("Sucesso", "Sucesso ao fazer LogOut");
-                      },
-                      onFail: () {
-                        Get.snackbar("Erro", "Erro ao fazer LogOut");
-                      },
-                    );
-                  },
-                  icon: const FaIcon(FontAwesomeIcons.arrowRightFromBracket)),
-            ),
-          ),
         ],
       ),
     );
